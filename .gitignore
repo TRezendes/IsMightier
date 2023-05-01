@@ -1,0 +1,12 @@
+.DS_Store
+instance/
+**/__pycache__
+scratch_folder/
+**/.env
+**/.flaskenv
+*jupyter*
+Supplemental/
+**/.nova
+config.json
+attributions.txt
+.pyc

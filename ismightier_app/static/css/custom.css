@@ -1,0 +1,28 @@
+html {
+    min-height: 100%;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+
+}
+
+.larger {
+    font-size: larger;
+}
+
+.smaller {
+    font-size: smaller;
+}
+
+.breathe {
+    padding: 10px;
+    margin-bottom: 2%;
+}
+
