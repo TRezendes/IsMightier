@@ -3,7 +3,22 @@ html {
 }
 
 body {
+    color: #000000;
     background-color: #ffffff;
+    font-family: 'Libre Franklin', sans-serif;
+}
+
+blockquote {
+    font-style: italic;
+    padding: 10px;
+}
+
+h2, h3 {
+    font-family: 'Libre Franklin', sans-serif;
+}
+
+h2 {
+    font-weight: 600;
 }
 
 .centered {
