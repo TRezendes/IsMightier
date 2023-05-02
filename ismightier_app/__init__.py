@@ -1,7 +1,8 @@
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, session
 from rikeripsum.rikeripsum import generate_paragraph as RikerIpsum
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from .representatives.representatives_forms import RepLookupForm
 
 import json
 
@@ -40,7 +41,7 @@ def create_app():
 
     with app.app_context():
         # Register blueprints
-#        from .ticketing import ticketing as ticketing
+        from .representatives import representatives as representatives
         
 #        app.register_blueprint(ticketing, url_prefix='/ticketing')
         
@@ -70,7 +71,9 @@ def create_app():
 
     @app.route('/')
     def home():
-        return render_template('index.html')
+        return redirect(
+            url_for('representatives.homepage')
+        )
         
     # @app.route('/favicon-folder/<icon>')
     # def favicon():
