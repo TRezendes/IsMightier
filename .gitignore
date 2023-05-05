@@ -11,3 +11,4 @@ config.json
 attributions.txt
 .pyc
 untracked/
+.ipynb_checkpoints
