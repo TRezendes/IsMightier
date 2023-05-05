@@ -3,5 +3,5 @@ from wtforms.validators import DataRequired, Email, EqualTo, InputRequired, Leng
 from flask_wtf import FlaskForm
 
 class RepLookupForm(FlaskForm):
-    address = StringField(label='Your Address', validators=[DataRequired()])
+    address = StringField(label='Enter Your Address', validators=[DataRequired()])
     submit = SubmitField(label='Find Your Representatives')

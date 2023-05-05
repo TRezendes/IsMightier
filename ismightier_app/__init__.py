@@ -2,7 +2,6 @@ from flask import Flask, render_template, url_for, redirect, session
 from rikeripsum.rikeripsum import generate_paragraph as RikerIpsum
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
-from .representatives.representatives_forms import RepLookupForm
 
 import json
 
@@ -21,7 +20,7 @@ def server_error(e):
     return render_template('500.html'), 500
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, subdomain_matching=True)
     
     config_path = 'config.json'
     with open(config_path) as config_file:
@@ -29,8 +28,10 @@ def create_app():
 
     # General configuration
     app.config['SECRET_KEY'] = config.get('SECRET_KEY')
+    app.config['SERVER_NAME'] = config.get('SERVER_NAME')
     app.config['SQLALCHEMY_DATABASE_URI'] = config.get('DEV_DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config.get('SQLALCHEMY_TRACK_MODIFICATIONS')  
+    app.config['GOOGLE_CIVIC_INFORMATION_API_KEY'] = config.get('GOOGLE_CIVIC_INFORMATION_API_KEY')
 
     db.init_app(app)
     db.app = app
@@ -41,9 +42,11 @@ def create_app():
 
     with app.app_context():
         # Register blueprints
-        from .representatives import representatives as representatives
-        
-#        app.register_blueprint(ticketing, url_prefix='/ticketing')
+        from .thepen import thepen as thepen
+        app.register_blueprint(thepen, subdomain='thepen')
+
+        from .home import home as home
+        app.register_blueprint(home)
         
     
         # Register error handlers
@@ -72,7 +75,7 @@ def create_app():
     @app.route('/')
     def home():
         return redirect(
-            url_for('representatives.homepage')
+            url_for('home.homepage')
         )
         
     # @app.route('/favicon-folder/<icon>')

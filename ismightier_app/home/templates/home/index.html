@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block title %}🖋️{% endblock %}
 {% block content %}
+
 <div class="w3-bar pride-helms-blue w3-responsive">
     <h1 class="font-herr-von-muellerhoff pride-helms-white-text" style="font-size: 128px;">Is Mightier</h1>
 </div>
 <div class="w3-row w3-margin">
     <blockquote cite="https://archive.org/details/richelieuorconsp00lyttiala/page/38/mode/2up"
-        class="w3-large w3-col s12 m6 l3" style="text-align: left;">
+        class="w3-large w3-col s12 m12 l3" style="text-align: left;">
         True,—This!<br />
         Beneath the rule of men entirely great<br />
         The pen is mightier than the sword. Behold<br />
@@ -17,11 +18,16 @@
         <br />
         States can be saved without it!<br />
     </blockquote>
-    <div class="w3-col s12 m6 l8">
+    <div class="w3-col s12 m12 l8">
         <h2>Direct Action is Important, but We Can't Always Fight</h2>
         <h2>When we Can't Fight, we Write</h2>
         <h3>Start by Finding Your Representatives</h3>
-
+        <form method="post">
+            {{ form.csrf_token }}
+            {{ form.address(size=60, placeholder='Address', class_='form-line-input') }}<br />
+            {{ form.address.label }}<br />
+            {{ form.submit(class_='w3-margin') }}
+        </form>
     </div>
 </div>
 {% endblock %}
