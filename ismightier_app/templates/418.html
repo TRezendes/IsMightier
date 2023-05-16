@@ -1,0 +1,7 @@
+{% extends "error-template.html" %}
+{% block title %}{{ super() }}{{ self.errorNum() }}{% endblock %}
+
+{% block errorNum %}418{% endblock %}
+{% block errorText %}I'm a teapot{% endblock %}
+{% block errorExtra %}<h2 class="w3-xxxlarge">🫖</h2>{% endblock %}
+{# In case the character in the h2 tag above does not render, it is the teapot emoji: https://emojipedia.org/teapot/ #}

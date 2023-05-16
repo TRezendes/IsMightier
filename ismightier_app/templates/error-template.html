@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Error | {% endblock %}
+{% block content %}
+<div class="w3-bar pride-helms-blue w3-responsive centered">
+    <h1 class="font-herr-von-muellerhoff" style="font-size: 128px;">Is Mightier</h1>
+</div>
+<div class="error w3-bar w3-responsive centered font-libre-franklin pride-helms-pink">
+    <h1 class="w3-jumbo">{% block errorNum %}{% endblock %}</h1>
+    <h2 class="w3-xxxlarge">{% block errorText %}{% endblock %}</h2>
+    {% block errorExtra %}{% endblock %}
+</div>
+<div class="w3-large w3-padding"><a href="{{ url_for('home.homepage') }}">Return Home</a> | <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#{{ self.errorNum() }}">More about Error {{ self.errorNum() }}</a><br />
+<a href="mailto:ismightier@rezendes.info?subject='Requesting Help from the {{ self.errorNum() }} Error Page'">Contact IsMightier</a></div>
+{% endblock %}
+

@@ -1,0 +1,5 @@
+{% extends "error-template.html" %}
+{% block title %}{{ super() }}{{ self.errorNum() }}{% endblock %}
+
+{% block errorNum %}403{% endblock %}
+{% block errorText %}Forbidden{% endblock %}
