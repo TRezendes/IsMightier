@@ -16,7 +16,7 @@
 
 ~[*Richelieu; Or the Conspiracy*, Edward Bulwer-Lytton](https://archive.org/details/richelieuorconsp00lyttiala/page/38/mode/2up)
 
-They say that the pen is mightier than the sword, and the sword has its place in revolution, the pen is available more readily to more people. This project aims to make it as easy as possible for American citizens to contact their elected representatives about important issues.  
+They say that the pen is mightier than the sword, and while the sword has its place in revolution, the pen is available more readily to more people. This project aims to make it as easy as possible for American citizens to contact their elected representatives about important issues.  
   
 While I hope that *Is Mightier* may someday address many pressing issues facing are nation, the first issue that it will address is the fascist assault on the rights of trans people.  
   
