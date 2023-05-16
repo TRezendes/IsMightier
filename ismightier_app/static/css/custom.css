@@ -42,8 +42,21 @@ h2 {
 }
 
 .form-line-input {
-	border-radius: 2px;
-	border: 0;
+	border-radius: 5px;
+	border: 1;
+    border-color: #f5a9b8; /* pride-helms-pink */
 	padding: 2px;
 	height: 2em;
+}
+
+div.error {
+    position: relative;
+    z-index: -1;
+    margin-top: -2rem;
+    padding: 3rem;
+}
+
+.custom-ripple:active {
+    box-shadow: none;
+    transform: translate(2px,2px);
 }
