@@ -16,6 +16,8 @@ def page_not_found_error(e):
     return render_template('404.html'), 404
 def method_not_allowed_error(e):
     return render_template('405.html'), 405
+def im_a_teapot_error(e):
+    return render_template('418.html'), 418
 def server_error(e):
     return render_template('500.html'), 500
 
@@ -50,13 +52,12 @@ def create_app():
         
     
         # Register error handlers
-        '''
         app.register_error_handler(400, bad_request_error)
         app.register_error_handler(403, forbidden_error)
         app.register_error_handler(404, page_not_found_error)
         app.register_error_handler(405, method_not_allowed_error)
+        app.register_error_handler(418, im_a_teapot_error)
         app.register_error_handler(500, server_error)
-        '''
 
     # Add RikerIpsum template global
     @app.template_global('RikerIpsum')
