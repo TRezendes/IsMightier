@@ -18,7 +18,7 @@
 
 They say that the pen is mightier than the sword, and while the sword has its place in revolution, the pen is available more readily to more people. This project aims to make it as easy as possible for American citizens to contact their elected representatives about important issues.  
   
-While I hope that *Is Mightier* may someday address many pressing issues facing are nation, the first issue that it will address is the fascist assault on the rights of trans people.  
+While I hope that *Is Mightier* may someday address many pressing issues facing our nation, the first issue that it will address is the fascist assault on the rights of trans people.  
   
 ### Site in its infancy
 
