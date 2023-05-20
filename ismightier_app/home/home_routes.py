@@ -2,6 +2,7 @@ from flask import Blueprint, current_app, flash, redirect, render_template, requ
 from .home_funcs import AddBgID,GetBgID,RepNormal
 from ismightier_app.models import USCongressTbl
 from wtforms.validators import ValidationError
+from sqlalchemy import and_,create_engine,or_
 from .home_forms import RepLookupForm
 from ismightier_app import db
 from . import home
@@ -67,6 +68,6 @@ def results():
 
 
 
-bioGuideIDs['name']=db.session.execute(db.select(USCongressTbl.bioguide_id).filter_by(or_(and_((USCongressTbl.first_name==splits[0]),USCongressTbl.last_name==splits[1]),and_((USCongressTbl.nickname==splits[0]),USCongressTbl.last_name==splits[1]))))
+# bioGuideIDs['name']=db.session.execute(db.select(USCongressTbl.bioguide_id).filter_by(or_(and_((USCongressTbl.first_name==splits[0]),USCongressTbl.last_name==splits[1]),and_((USCongressTbl.nickname==splits[0]),USCongressTbl.last_name==splits[1]))))
 
 
