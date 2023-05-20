@@ -18,6 +18,8 @@ CREATE TABLE US_Congress (
     url text,
     address text,
     phone text,
+    fax_number text,
+    fax_zero_url text,
     contact_form text,
     rss_url text UNIQUE,
     twitter text UNIQUE,
