@@ -23,6 +23,7 @@ def server_error(e):
 
 def create_app():
     app = Flask(__name__, subdomain_matching=True)
+    app.jinja_env.add_extension('jinja2.ext.loopcontrols')
     
     config_path = 'config.json'
     with open(config_path) as config_file:
@@ -45,12 +46,13 @@ def create_app():
     with app.app_context():
         # Register blueprints
         from .thepen import thepen as thepen
-        app.register_blueprint(thepen, subdomain='thepen')
-
         from .home import home as home
+        from .letters import letters as letters
+        app.register_blueprint(thepen, subdomain='thepen')
         app.register_blueprint(home)
-        
-    
+        app.register_blueprint(letters, url_prefix='/letters')
+
+
         # Register error handlers
         app.register_error_handler(400, bad_request_error)
         app.register_error_handler(403, forbidden_error)

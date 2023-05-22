@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Representatives{% endblock %}
+{% block content %}
+
+<div class="w3-bar pride-helms-blue w3-responsive">
+    <h1 class="font-herr-von-muellerhoff pride-helms-white-text w3-jumbo"><a href="{{ url_for('home.homepage') }}">Is Mightier</a></h1>
+</div>
+
+<h2 style="font-style: italic;"">Your Representatives</h2>
+<p class="larger">Select One to Send a Letter</p>
+
+<div class="grid-container four">
+{% set duplicateTitleCounter = namespace(value=1) %}
+{% for index, row in repDF.iterrows() %}
+    {% set div_id = row['title']|replace(' ','_') %}
+    {% if (index > 0 and repDF['title'][index] == repDF['title'][index - 1]) or repDF['title'][index] == repDF['title'][index + 1] %}
+        {% set div_id = div_id + '_' + duplicateTitleCounter.value|string %}
+        {% set duplicateTitleCounter.value = duplicateTitleCounter.value + 1 %}
+    {% else %}
+        {% set duplicateTitleCounter.value = 1 %}
+    {% endif %}
+    {% if row['party'] == 'Democratic Party' %}
+        {% set party_icon_class = 'fa-democrat' %}
+        {% set party_background_class = 'dem-background' %}
+    {% elif row['party'] == 'Republican Party' %}
+        {% set party_icon_class = 'fa-republican' %}
+        {% set party_background_class = 'gop-background' %}
+    {% elif row['party'] == 'Green Party' %}
+        {% set party_icon_class = 'fa-g' %}
+        {% set party_background_class = 'grn-background' %}
+    {% else %}
+        {% set party_icon_class = 'fa-landmark' %}
+        {% set party_background_class = 'ind-background' %}
+    {% endif %}
+    <a href="{{ url_for('letters.rep_info', name=row['name']) }}" style="text-decoration: none;">
+        <div id="{{ div_id }}" class="{{ party_background_class }}"> <!--{{ party_background_class }} -->
+            <h4>{{ row['title'] }}</h4>
+            <p style="margin-top: -5px;">
+                {{ row['name'] }}<br />
+                <p style="margin-bottom: -5px;"><i class="w3-large fa-solid {{ party_icon_class }}"></i></p> <!--{{ party_icon_class }} -->
+            </p>
+        </div>
+    </a>    
+{% endfor %}
+</div>
+
+{% endblock %}
+
+
+{# {% if index > 0 and repDF['title'][index] == repDF['title'][index - 1] %}
+    {% set duplicateTitleCounter = 1 %}
+    {% set div_id = row['title']+ str(duplicateTitleCounter + 1) %}
+{% else %}
+    {% set duplicateTitleCounter = 0 %}
+    {% set div_id = row['title'] %} #}

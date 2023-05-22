@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Representatives{% endblock %}
+{% block content %}
+
+<div class="w3-bar pride-helms-blue w3-responsive">
+    <h1 class="font-herr-von-muellerhoff pride-helms-white-text w3-jumbo"><a href="{{ url_for('home.homepage') }}">Is Mightier</a></h1>
+</div>
+
+name - party - title - phones_1 - urls_1 - urls_2 - address_1.line1 - address_1.city - address_1.state - address_1.zip - bioguide_id - fax_number - fax_zero_url - 
+
+<div>
+{{ repDF[1] }}
+</div>
+
+<div class="flex-container">
+{% set duplicateTitleCounter = namespace(value=1) %}
+{% for index, row in repDF.iterrows() %}
+    {% set div_id = row['title']|replace(' ','_') %}
+    {% if (index > 0 and repDF['title'][index] == repDF['title'][index - 1]) or repDF['title'][index] == repDF['title'][index + 1] %}
+        {% set div_id = div_id + '_' + duplicateTitleCounter.value|string %}
+        {% set duplicateTitleCounter.value = duplicateTitleCounter.value + 1 %}
+    {% else %}
+        {% set duplicateTitleCounter.value = 1 %}
+    {% endif %}
+<div id="{{ div_id }}">
+
+<h3>{{ row['title'] }}</h3>
+<h4>{{ row['name'] }}</h4>
+<p>{{ row['party'] }}</p>
+    {% for column in shortCols %}
+        {% if row[column] == None %}
+            {% break %}
+        {% elif 'phone' in column %}
+            <p>Phone: {{ row[column] }}</p>
+        {% elif 'url' in column %}
+            <p><a href="{{ row[column] }}">{{ row[column] }}</a></p>
+        {% elif column == 'fax_number' %}
+            <p>Fax: <a href="{{ row['fax_zero_url'] }}">{{ '(' + row['fax_number'][0:3] + ') ' + row['fax_number'][3:6] + '-' + row['fax_number'][6:10] }}</a></p>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}
+
+
+{# {% if index > 0 and repDF['title'][index] == repDF['title'][index - 1] %}
+    {% set duplicateTitleCounter = 1 %}
+    {% set div_id = row['title']+ str(duplicateTitleCounter + 1) %}
+{% else %}
+    {% set duplicateTitleCounter = 0 %}
+    {% set div_id = row['title'] %} #}

@@ -1,10 +1,11 @@
 from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
-from .home_funcs import AddBgID,GetBgID,RepNormal
+from .home_funcs import GetFedRepInfo,RepNormal
 from ismightier_app.models import USCongressTbl
 from wtforms.validators import ValidationError
 from sqlalchemy import and_,create_engine,or_
 from .home_forms import RepLookupForm
 from ismightier_app import db
+import numpy as np
 from . import home
 import requests
 import json
@@ -25,38 +26,31 @@ def homepage():
 
 @home.route('/representatives')
 def results():
-    if session['lookupAddress']:
+    try:
+        lookupAddress=session['lookupAddress']
+#        session.pop('lookupAddress')
         civicKey = current_app.config['GOOGLE_CIVIC_INFORMATION_API_KEY']
         civicRoles = ['headOfState','headOfGovernment','deputyHeadOfGovernment','executiveCouncil','legislatorLowerBody','legislatorUpperBody','schoolBoard']
-        civicPayload = {'key': civicKey,'roles': civicRoles,'address': session['lookupAddress']}
-        session.pop('lookupAddress')
+        civicPayload = {'key': civicKey,'roles': civicRoles,'address': lookupAddress}
         civicResponse = requests.get('https://www.googleapis.com/civicinfo/v2/representatives', params=civicPayload)
         if civicResponse.reason == 'OK':
             repDF = RepNormal(civicResponse)
-            IDdict = GetBgID(repDF)
-            repDF = AddBgID(repDF,IDdict)
-
-
-            '''
-            rowsWritten = 0
-            repDF = RepNormal(civicResponse)
-            try:
-                rowsWritten,tempTableName = RepDFSave(repDF)
-            except ValueError:
-                flash(f'The application attempted to create a table that already exists. No data was written to the database. Please try again.', category='red')
-            if rowsWritten > 0:
-                session['tempTable']=tempTableName
-                return render_template(
-                    '/home/representatives.html',
-                    repDict=representativeDictionary
-                    )
-            '''
-#            db.session.execute(db.select(UserInfoTbl.home_is_landing).filter_by(display_name=playerName)).scalar():
-            
+            repDF = GetFedRepInfo(repDF)
+            columnList=list(repDF.columns)
+            shortCols=[column for column in columnList if column not in ['name','party','title','fax_zero_url']]
+            session['repDF']=repDF.to_dict(orient='tight')
+            return render_template(
+                '/home/representatives.html',
+                lookupAddress=lookupAddress,
+                columnList=columnList,
+                shortCols=shortCols,
+                repDF=repDF
+            )
         else:
             responseError = str(civicResponse.status_code) + ': ' + civicResponse.reason
             flash(f'Address search failed. Error {responseError}', category='red')
-    return redirect(
+    except KeyError:
+        return redirect(
         url_for('home.homepage')
     )
 
@@ -68,6 +62,6 @@ def results():
 
 
 
-# bioGuideIDs['name']=db.session.execute(db.select(USCongressTbl.bioguide_id).filter_by(or_(and_((USCongressTbl.first_name==splits[0]),USCongressTbl.last_name==splits[1]),and_((USCongressTbl.nickname==splits[0]),USCongressTbl.last_name==splits[1]))))
+#bioGuideIDs['name']=db.session.execute(db.select(USCongressTbl.bioguide_id).filter_by(or_(and_((USCongressTbl.first_name==splits[0]),USCongressTbl.last_name==splits[1]),and_((USCongressTbl.nickname==splits[0]),USCongressTbl.last_name==splits[1]))))
 
 
