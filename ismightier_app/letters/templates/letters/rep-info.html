@@ -6,13 +6,42 @@
     <h1 class="font-herr-von-muellerhoff pride-helms-white-text w3-jumbo"><a href="{{ url_for('home.homepage') }}">Is Mightier</a></h1>
 </div>
 
-name - party - title - phones_1 - urls_1 - urls_2 - address_1.line1 - address_1.city - address_1.state - address_1.zip - bioguide_id - fax_number - fax_zero_url - 
 
-<div>
-{{ repDF[1] }}
+<div class="w3-col w3-padding s12 m12 l3" style="text-align: left;">
+    <h4>
+        {{ namedRep.iloc[0]['name'] }}<br />
+        <span class="smaller">{{ namedRep.iloc[0]['title'] }}</span>
+    </h4>
+    <p>
+        {% for field in fieldList %}
+            {% if 'phone' in field %}
+                <a href="tel+1{{ namedRep.iloc[0][field]|replace('(','')|replace(')','')|replace(' ','')|replace('-','') }}">{{ namedRep.iloc[0][field] }}</a><br />
+            {% elif 'url' in field %}
+                <a href="{{ namedRep.iloc[0][field] }}" target="_blank">{{ namedRep.iloc[0][field] }}</a><br />
+            {% else %}
+                {{ namedRep.iloc[0][field] }}<br />
+            {% endif %}
+        {% endfor %}
+        {% for field in addressList %}
+            {% if 'city' in field %}
+                {{ namedRep.iloc[0][field] }}, 
+            {% elif 'state' in field %}
+                {{ namedRep.iloc[0][field] }} 
+            {% elif 'zip' in field %}
+                {{ namedRep.iloc[0][field] }}<br />
+            {% endif %}
+        {% endfor %}
+        {% if namedRep.iloc[0]['fax_number'] %}
+            send a fax via FaxZero:<br /><a href="{{ namedRep.iloc[0]['fax_zero_url'] }}" target="_blank">{{ '(' + namedRep.iloc[0]['fax_number'][0:3] + ') ' + namedRep.iloc[0]['fax_number'][3:6] + '-' + namedRep.iloc[0]['fax_number'][6:10] }}</a>
+        {% endif %}
+    </p>
 </div>
 
-<div class="flex-container">
+
+
+
+
+{# <div class="flex-container">
 {% set duplicateTitleCounter = namespace(value=1) %}
 {% for index, row in repDF.iterrows() %}
     {% set div_id = row['title']|replace(' ','_') %}
@@ -35,12 +64,12 @@ name - party - title - phones_1 - urls_1 - urls_2 - address_1.line1 - address_1.
         {% elif 'url' in column %}
             <p><a href="{{ row[column] }}">{{ row[column] }}</a></p>
         {% elif column == 'fax_number' %}
-            <p>Fax: <a href="{{ row['fax_zero_url'] }}">{{ '(' + row['fax_number'][0:3] + ') ' + row['fax_number'][3:6] + '-' + row['fax_number'][6:10] }}</a></p>
+            <p>Fax: <a href="{{ row['fax_zero_url'] }}">{{ '(' + namedRep.iloc[0]['fax_number'][0:3] + ') ' + namedRep.iloc[0]['fax_number'][3:6] + '-' + namedRep.iloc[0]['fax_number'][6:10] }}</a></p>
         {% endif %}
     {% endfor %}
 </div>
 {% endfor %}
-</div>
+</div> #}
 
 {% endblock %}
 

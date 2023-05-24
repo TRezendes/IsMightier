@@ -15,7 +15,19 @@ def rep_info(name):
     repDF=session['repDF']
     repDF=pd.DataFrame.from_dict(repDF, orient='tight')
     namedRep=repDF.loc[repDF['name'] == name]
-    print(namedRep)
+    fieldList=[]
+    addressList=[]
+    for col in namedRep.columns:
+        try: 
+            if col.split('.')[1] in ['city','state','zip']:
+                addressList.append(col)
+        except:
+            pass
+        if col not in ['bioguide_id','fax_number','fax_zero_url','name','title'] and col not in addressList:
+            fieldList.append(col)
     return render_template(
-        '/letters/rep-info.html'
+        '/letters/rep-info.html',
+        namedRep=namedRep,
+        fieldList=fieldList,
+        addressList=addressList
     )
