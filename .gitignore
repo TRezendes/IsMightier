@@ -13,3 +13,4 @@ attributions.txt
 untracked/
 .ipynb_checkpoints
 *.ipynb
+.vscode
