@@ -64,6 +64,9 @@ def GetFedRepInfo(df):
     bioGuideIDs={}
     faxNumbers={}
     faxURLs={}
+    bgID=None
+    faxNum=None
+    faxURL=None
     for name in repsToGet:
         splits=name.split(' ')
         obj=db.session.execute(db.select(USCongressTbl).where(or_(and_(USCongressTbl.first_name==splits[0],USCongressTbl.last_name==splits[1]),and_((USCongressTbl.nickname==splits[0]),USCongressTbl.last_name==splits[1])))).scalars()
@@ -71,9 +74,12 @@ def GetFedRepInfo(df):
             bgID=row.bioguide_id
             faxNum=row.fax_number
             faxURL=row.fax_zero_url
-        bioGuideIDs[name]=bgID
-        faxNumbers[name]=faxNum
-        faxURLs[name]=faxURL
+        if bgID:
+            bioGuideIDs[name]=bgID
+        if faxNum:
+            faxNumbers[name]=faxNum
+        if faxURL:
+            faxURLs[name]=faxURL
     AddFedRepInfo(df,bioGuideIDs,faxNumbers,faxURLs)
     df=df.where(df.notnull(),None)
     return df
