@@ -12,27 +12,45 @@
         {{ namedRep.iloc[0]['name'] }}<br />
         <span class="smaller">{{ namedRep.iloc[0]['title'] }}</span>
     </h4>
-    <p>
+    <p style="line-height: 1.8;">
         {% for field in fieldList %}
-            {% if 'phone' in field %}
-                <a href="tel+1{{ namedRep.iloc[0][field]|replace('(','')|replace(')','')|replace(' ','')|replace('-','') }}">{{ namedRep.iloc[0][field] }}</a><br />
-            {% elif 'url' in field %}
-                <a href="{{ namedRep.iloc[0][field] }}" target="_blank">{{ namedRep.iloc[0][field] }}</a><br />
-            {% else %}
-                {{ namedRep.iloc[0][field] }}<br />
+            {% if namedRep.iloc[0][field] %}
+                {% if 'phone' in field %}
+                    <a href="tel+1{{ namedRep.iloc[0][field]|replace('(','')|replace(')','')|replace(' ','')|replace('-','') }}">{{ namedRep.iloc[0][field] }}</a><br />
+                {% elif 'url' in field %}
+                    <a href="{{ namedRep.iloc[0][field] }}" target="_blank">{{ namedRep.iloc[0][field] }}</a><br />
+                {% elif 'party' in field %}
+                    {% if namedRep.iloc[0][field] == 'Democratic Party' %}
+                        Democrat
+                    {% elif namedRep.iloc[0][field] == 'Republican Party' %}
+                        Republican
+                    {% else %}
+                        {{ namedRep.iloc[0][field] }}
+                    {% endif %}<br />
+                {% else %}
+                    {{ namedRep.iloc[0][field] }}<br />
+                {% endif %}
             {% endif %}
         {% endfor %}
+    </p>
+    <p>
         {% for field in addressList %}
-            {% if 'city' in field %}
-                {{ namedRep.iloc[0][field] }}, 
-            {% elif 'state' in field %}
-                {{ namedRep.iloc[0][field] }} 
-            {% elif 'zip' in field %}
-                {{ namedRep.iloc[0][field] }}<br />
+            {% if namedRep.iloc[0][field] %}
+                {% if 'line' in field %}
+                    {{ namedRep.iloc[0][field] }}<br />
+                {% elif 'city' in field %}
+                    {{ namedRep.iloc[0][field] }}, 
+                {% elif 'state' in field %}
+                    {{ namedRep.iloc[0][field] }} 
+                {% elif 'zip' in field %}
+                    {{ namedRep.iloc[0][field] }}<br />
+                {% endif %}
             {% endif %}
         {% endfor %}
         {% if namedRep.iloc[0]['fax_number'] %}
-            send a fax via FaxZero:<br /><a href="{{ namedRep.iloc[0]['fax_zero_url'] }}" target="_blank">{{ '(' + namedRep.iloc[0]['fax_number'][0:3] + ') ' + namedRep.iloc[0]['fax_number'][3:6] + '-' + namedRep.iloc[0]['fax_number'][6:10] }}</a>
+            <p>
+                send a fax via FaxZero:<br /><a href="{{ namedRep.iloc[0]['fax_zero_url'] }}" target="_blank">{{ '(' + namedRep.iloc[0]['fax_number'][0:3] + ') ' + namedRep.iloc[0]['fax_number'][3:6] + '-' + namedRep.iloc[0]['fax_number'][6:10] }}</a>
+            </p>
         {% endif %}
     </p>
 </div>

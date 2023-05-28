@@ -19,7 +19,7 @@ def rep_info(name):
     addressList=[]
     for col in namedRep.columns:
         try: 
-            if col.split('.')[1] in ['city','state','zip']:
+            if col.split('.')[1] in ['city','state','zip','line1','line2']:
                 addressList.append(col)
         except:
             pass
