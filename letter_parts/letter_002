@@ -1,10 +1,12 @@
-Part    |: Whole Letter
-Stance  |: Supportive Representative
-Level   |: State
-Chamber |: Senate
-Location|: Pennsylvania
-Subject |: Trans/queer rights
-Bill    |: HB300
+part_placement      :| Whole Letter
+subject             :| Trans/queer rights
+recipient_stance    :| Supportive
+government_level    :| State
+chamber             :| Senate
+geography           :| Pennsylvania
+bill_referenced     :| HB300
+part_text           :|
+
 
 As one of your constituents, I want to write and thank you for your support of the rights of transgender people. The lack of such support from so many at all levels of government is profoudnly disturbing, and I am happy to be represented by someone who believes that trans rights are human rights and that all people in this country, trans, cis, queer, straight, or have equal right to protection under the law. That said, mere support of trans rights is not enough. The Republican party is waging a war against trans folks, and they are not being met with nearly enough opposition.
 
