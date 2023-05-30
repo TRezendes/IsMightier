@@ -1,4 +1,6 @@
-CREATE TABLE US_Congress (
+/* TABLE CREATION */
+
+CREATE TABLE IF NOT EXISTS us_congress (
     bioguide_id text CONSTRAINT p_key_uscongress PRIMARY KEY,
     date_added date DEFAULT CURRENT_DATE NOT NULL,
     last_updated timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -40,3 +42,46 @@ CREATE TABLE US_Congress (
     icpsr_id integer UNIQUE,
     wikipedia_id text UNIQUE
     );
+
+CREATE TABLE IF NOT EXISTS letter_part (
+    part_id uuid CONSTRAINT pkey_letterpart  PRIMARY KEY DEFAULT gen_random_uuid (),
+    part_placement text NOT NULL,
+    subject text NOT NULL,
+    recipient_sentiment int NOT NULL,
+    government_level text NOT NULL,
+    chamber text,
+    geography text NOT NULL,
+    bill_referenced text,
+    part_text text NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS representative_sentiment (
+    full_name text,
+    subject text,
+    sentiment int NOT NULL,
+    bioguide_id text,
+    CONSTRAINT pkey_representativesentiment PRIMARY KEY (full_name,subject)
+);
+
+CREATE TABLE IF NOT EXISTS sentiment_level (
+    level int CONSTRAINT pkey_sentimentlevel PRIMARY KEY,
+    description text
+);
+
+CREATE TABLE IF NOT EXISTS federal_sponsor (
+    bill text,
+    sponsor_bioguide_id text,
+    CONSTRAINT pkey_federalsponsor PRIMARY KEY (bill,sponsor_bioguide_id)
+);
+
+
+/* FOREIGN KEY CREATION */
+
+ALTER TABLE letter_part
+    ADD CONSTRAINT fkey_letterpart_sentimentlevel FOREIGN KEY(recipient_sentiment) REFERENCES sentiment_level(level)
+;
+
+ALTER TABLE representative_sentiment 
+    ADD CONSTRAINT fkey_representativesentiment_uscongress FOREIGN KEY(bioguide_id) REFERENCES us_congress(bioguide_id),
+    ADD CONSTRAINT fkey_representativesentiment_sentimentlevel FOREIGN KEY(sentiment) REFERENCES sentiment_level(level)
+;	
