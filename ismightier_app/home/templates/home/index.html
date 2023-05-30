@@ -22,11 +22,15 @@
         <h2>Direct Action is Important, but We Can't Always Fight</h2>
         <h2>When we Can't Fight, we Write</h2>
         <h3>Start by Finding Your Representatives</h3>
-        <form method="post">
+        <form method="post" novalidate>
             {{ form.csrf_token }}
-            {{ form.address(size=60, placeholder='Address', class_='form-line-input') }}<br />
-            {{ form.address.label }}<br />
-            {{ form.submit(class_='w3-margin w3-btn pride-helms-pink w3-ripple custom-ripple', style_='border-radius: 5px;') }}
+            {{ form.address(size=60, placeholder='Address', class_='form-line-input') }}<br />  
+            {% if form.address.errors %}
+                {% for error in form.address.errors %}<span class="pride-baker-red-text">{{ error }}{% endfor %}</span><br />
+            {% else %}
+                {{ form.address.label }}<br />
+            {% endif %}
+            {{ form.submit(class_='w3-margin pride-helms-pink custom-default-button') }}
         </form>
     </div>
 </div>

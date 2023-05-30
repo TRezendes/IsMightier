@@ -24,6 +24,14 @@ h2 {
     font-weight: 600;
 }
 
+a:hover {
+    text-shadow: 1px 1px 5px #f5a9b8aa; /* pride-helms-pink */
+}
+
+a:active {
+    text-shadow: none;
+}
+
 a[href^="tel:"]:before {
     content: "\260e";
     margin-right: 10px;
@@ -64,11 +72,31 @@ div.error {
     padding: 3rem;
 }
 
-.custom-ripple:active {
+.custom-default-button {
+    font-style: italic;
+    padding: 5px 15px;
+    border: 1px solid #f5a9b8;
+    border-radius: 100px 10px;
+}
+
+.custom-default-button:hover {
+    border: 1px solid #d58998;
+    border-radius: 10px 100px;
+    background-color: #d58998;
+}
+
+.custom-default-button:active {
+    color: #d58998;
+    border: 1px solid #d58998;
+    border-radius: 10px 100px;
+    background-color: #ffffff;
+}
+
+/*.custom-ripple:active {
     box-shadow: none;
     transform: translate(2px,2px);
 }
-
+*/
 .flex-container {
 	display: flex;
 	flex-direction: row;
