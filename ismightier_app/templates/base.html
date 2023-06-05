@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}?v=4.15">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/color-library-pride.css') }}?v=0.1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}?v=0.1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stateface.css') }}?v=0.1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}?v=0.1">
     {% block stylesheets %}{% endblock %}
 
@@ -73,7 +74,7 @@
             {% if messages %}
             {% for category, message in messages %}
             <div class="w3-panel w3-{{ category }}"">
-                     <button type=" button" class="close-button" aria-label="Close" onclick="this.parentElement.style.display='none';">
+                <button type=" button" class="close-button" aria-label="Close" onclick="this.parentElement.style.display='none';">
                 <span aria-hidden="true">&times;</span>
                 </button>
                 {{ message }}
@@ -94,7 +95,9 @@
         <div class="breathe">
             &nbsp;
         </div>
+        {% block footer %}
         {% include ['footer.html'] %}
+        {% endblock %}
     </div>
 </body>
 <script>

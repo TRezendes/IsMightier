@@ -10,20 +10,24 @@
 <div class="w3-col w3-padding s12 m12 l3" style="text-align: left;">
     <h4>
         {{ namedRep.iloc[0]['name'] }}<br />
-        <span class="smaller">{{ namedRep.iloc[0]['title'] }}</span>
+        {% if 'President' in namedRep.iloc[0]['title'] %}
+            <span class="smaller stateface stateface-us">{{ namedRep.iloc[0]['title'] }}</span>
+        {% else %}
+            <span class="smaller stateface stateface-{{ lookupState|lower }}">{{ namedRep.iloc[0]['title'] }}</span>
+        {% endif %}
     </h4>
     <p style="line-height: 1.8;">
         {% for field in fieldList %}
             {% if namedRep.iloc[0][field] %}
                 {% if 'phone' in field %}
-                    <a href="tel+1{{ namedRep.iloc[0][field]|replace('(','')|replace(')','')|replace(' ','')|replace('-','') }}">{{ namedRep.iloc[0][field] }}</a><br />
+                    <a href="tel:+1{{ namedRep.iloc[0][field]|replace('(','')|replace(')','')|replace(' ','')|replace('-','') }}">{{ namedRep.iloc[0][field] }}</a><br />
                 {% elif 'url' in field %}
-                    <a href="{{ namedRep.iloc[0][field] }}" target="_blank">{{ namedRep.iloc[0][field] }}</a><br />
+                    <a href="{{ namedRep.iloc[0][field] }}" target="_blank" style="text-decoration: none;"><i class="fa-solid fa-globe" style="color: #000000;"></i>&nbsp;&nbsp;&nbsp;<span style="text-decoration: underline;">{{ namedRep.iloc[0][field] }}</span></a><br />
                 {% elif 'party' in field %}
                     {% if namedRep.iloc[0][field] == 'Democratic Party' %}
-                        Democrat
+                        <i class="fa-solid fa-democrat"></i>&nbsp;&nbsp;&nbsp;Democrat
                     {% elif namedRep.iloc[0][field] == 'Republican Party' %}
-                        Republican
+                        <i class="fa-solid fa-republican"></i>&nbsp;&nbsp;&nbsp;Republican
                     {% else %}
                         {{ namedRep.iloc[0][field] }}
                     {% endif %}<br />
@@ -37,9 +41,13 @@
         {% for field in addressList %}
             {% if namedRep.iloc[0][field] %}
                 {% if 'line' in field %}
-                    {{ namedRep.iloc[0][field] }}<br />
+                    {% if 'line1' in field %}
+                        <span class="larger">&#9993;&nbsp;&nbsp;&nbsp;</span>{{ namedRep.iloc[0][field] }}<br />
+                    {% else %}
+                        {{ namedRep.iloc[0][field] }}<br />
+                    {% endif %}
                 {% elif 'city' in field %}
-                    {{ namedRep.iloc[0][field] }}, 
+                    <span style="margin-left: 2rem;">{{ namedRep.iloc[0][field] }}</span>, 
                 {% elif 'state' in field %}
                     {{ namedRep.iloc[0][field] }} 
                 {% elif 'zip' in field %}
@@ -48,16 +56,19 @@
             {% endif %}
         {% endfor %}
         {% if namedRep.iloc[0]['fax_number'] %}
+        {{ namedRep.iloc[0]['fax_number'] }}
             <p>
-                send a fax via FaxZero:<br /><a href="{{ namedRep.iloc[0]['fax_zero_url'] }}" target="_blank">{{ '(' + namedRep.iloc[0]['fax_number'][0:3] + ') ' + namedRep.iloc[0]['fax_number'][3:6] + '-' + namedRep.iloc[0]['fax_number'][6:10] }}</a>
+                send a fax via FaxZero:<br /><a href="{{ namedRep.iloc[0]['fax_zero_url'] }}" target="_blank" style="text-decoration: none;"><i class="fa-solid fa-fax" style="color: #000000;"></i>&nbsp;&nbsp;&nbsp;<span style="text-decoration: underline;">{{ '(' + namedRep.iloc[0]['fax_number'][0:3] + ') ' + namedRep.iloc[0]['fax_number'][3:6] + '-' + namedRep.iloc[0]['fax_number'][6:10] }}</span></a>
             </p>
         {% endif %}
     </p>
-    <p><a href="#" onclick="history.back()">Return to List of Representatives</a></p>
+    <p><a href="#" onclick="history.back()" style="text-decoration: none;"><span class="larger flipV">&#8617;&nbsp;&nbsp;&nbsp;</span><span style="text-decoration: underline;">Return to List of Representatives</span></a></p>
 </div>
-
-
-
+<div class="w3-col w3-padding s12 m12 l9">
+        <div style="height: 100%; width: 100%">
+            <iframe src="{{ url_for('letters.letter') }}" width="100%" style="display: block; border: none; width: 100%; height: 75vh;"></iframe>
+        </div>
+</div>
 
 
 {# <div class="flex-container">
