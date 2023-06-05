@@ -17,7 +17,7 @@ def RepNormal(response):
     for unit in repJSON['offices']:
         indexDict[unit['name']]=unit['officialIndices']
     for idKey in indexDict:
-         for i in range(len(indexDict[idKey])):
+        for i in range(len(indexDict[idKey])):
             officialDict=repJSON['officials'][indexDict[idKey][i]]
             officialDict['title']=idKey
             oDkeyLs=list(officialDict.keys())
@@ -68,9 +68,25 @@ def GetFedRepInfo(df):
     faxNum=None
     faxURL=None
     for name in repsToGet:
+        obj=None
+        row=None
+
+        # All of the print statements are debug nonsense. Remove them once you solve it. \/ \/ \/ \/ \/ \/ \/ \/
+        print(name)
         splits=name.split(' ')
         obj=db.session.execute(db.select(USCongressTbl).where(or_(and_(USCongressTbl.first_name==splits[0],USCongressTbl.last_name==splits[1]),and_((USCongressTbl.nickname==splits[0]),USCongressTbl.last_name==splits[1])))).scalars()
+        print(obj)
         for row in obj:
+            bgID=None
+            faxNum=None
+            faxURL=None
+            print(name)
+            print(row.bioguide_id)
+            print(row.fax_number)
+            print(row.fax_zero_url)
+            print(row,'\n')
+
+            # All of the print statements are debug nonsense. Remove them once you solve it. /\ /\ /\ /\ /\ /\ /\ /\
             bgID=row.bioguide_id
             faxNum=row.fax_number
             faxURL=row.fax_zero_url
