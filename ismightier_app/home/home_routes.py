@@ -34,6 +34,8 @@ def results():
         civicPayload = {'key': civicKey,'roles': civicRoles,'address': lookupAddress}
         civicResponse = requests.get('https://www.googleapis.com/civicinfo/v2/representatives', params=civicPayload)
         if civicResponse.reason == 'OK':
+            lookupState = civicResponse.json()['normalizedInput']['state']
+            session['lookupState'] = lookupState
             repDF = RepNormal(civicResponse)
             repDF = GetFedRepInfo(repDF)
             columnList=list(repDF.columns)
@@ -49,6 +51,9 @@ def results():
         else:
             responseError = str(civicResponse.status_code) + ': ' + civicResponse.reason
             flash(f'Address search failed. Error {responseError}', category='red')
+            return redirect(
+        url_for('home.homepage')
+    )
     except KeyError:
         return redirect(
         url_for('home.homepage')

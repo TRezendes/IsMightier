@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block stylesheets %}
+    <style>
+    .rainbow-text-loop {
+        font-size: 4rem;
+        display: inline-block;
+        margin-top: 1rem;
+        text-shadow: 2px 2px 4px #000000;
+        -webkit-animation: rainbow 5s infinite; 
+    }
+    @-webkit-keyframes rainbow{
+        0%{color: #e40303;}  
+        25%{color: #ff8c00;} 
+        50%{color: #ffed00;}
+        75%{color: #008026;}
+        100%{color: #004dff;}
+    }
+    </style>
+{% endblock %}
+{% block title %}Your Letter{% endblock %}
+{% block content %}
+    <div class="centered">
+        This is some content for the Letter Page
+    </div>
+    <div class="centered">
+        <p class="centered"><img style="width: 75%;" src="https://i.etsystatic.com/29493774/r/il/da6bf6/3129969106/il_1140xN.3129969106_azjk.jpg" alt="Background is black wwith diagonal bars in the colors of the rainbow Pride flag running up from left to right. White text in a handwritten-like font says 'No cops at Pride." /></p>
+        <h1 class="rainbow-text-loop">No Cops at Pride</h1>
+        <p class="smaller"> Look, it's an image!</p>
+    </div>
+
+{% block footer %}
+{% endblock %}
+{% endblock %}
+
+
+

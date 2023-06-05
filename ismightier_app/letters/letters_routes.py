@@ -17,6 +17,7 @@ def rep_info(name):
     namedRep=repDF.loc[repDF['name'] == name]
     fieldList=[]
     addressList=[]
+    lookupState=session['lookupState']
     for col in namedRep.columns:
         try: 
             if col.split('.')[1] in ['city','state','zip','line1','line2']:
@@ -29,5 +30,12 @@ def rep_info(name):
         '/letters/rep-info.html',
         namedRep=namedRep,
         fieldList=fieldList,
-        addressList=addressList
+        addressList=addressList,
+        lookupState=lookupState
+    )
+
+@letters.route('/letter')
+def letter():
+    return render_template(
+        '/letters/letter.html'
     )
