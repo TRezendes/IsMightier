@@ -32,6 +32,7 @@ def create_app():
     # General configuration
     app.config['SECRET_KEY'] = config.get('SECRET_KEY')
     app.config['SERVER_NAME'] = config.get('SERVER_NAME')
+    app.config['OPENSTATES_API_KEY'] = config.get('OPENSTATES_API_KEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = config.get('DEV_DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config.get('SQLALCHEMY_TRACK_MODIFICATIONS')  
     app.config['GOOGLE_CIVIC_INFORMATION_API_KEY'] = config.get('GOOGLE_CIVIC_INFORMATION_API_KEY')
