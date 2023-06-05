@@ -57,10 +57,11 @@ CREATE TABLE IF NOT EXISTS letter_part (
 
 CREATE TABLE IF NOT EXISTS representative_sentiment (
     full_name text,
+    state text,
     subject text,
     sentiment int NOT NULL,
     bioguide_id text,
-    CONSTRAINT pkey_representativesentiment PRIMARY KEY (full_name,subject)
+    CONSTRAINT pkey_representativesentiment PRIMARY KEY (full_name,state,subject)
 );
 
 CREATE TABLE IF NOT EXISTS sentiment_level (
@@ -74,6 +75,12 @@ CREATE TABLE IF NOT EXISTS federal_sponsor (
     CONSTRAINT pkey_federalsponsor PRIMARY KEY (bill,sponsor_bioguide_id)
 );
 
+CREATE TABLE IF NOT EXISTS state_sponsor (
+    state text,
+    bill text,
+    sponsor_name text,
+    CONSTRAINT pkey_statesponsor PRIMARY KEY (state,bill,sponsor_name)
+);
 
 /* FOREIGN KEY CREATION */
 
