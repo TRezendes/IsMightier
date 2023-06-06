@@ -14,3 +14,7 @@ untracked/
 .ipynb_checkpoints
 *.ipynb
 .vscode
+
+# MS Office temp files
+~*.xlsx
+~*.docx
