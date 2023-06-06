@@ -33,20 +33,20 @@ The basics of this site should be fairly easy to put together. I hope to have th
   
 ### The technicals
 
-This site is [Flask](https://flask.palletsprojects.com/en/2.3.x/) on the backend. It uses Google's [Civic Information API](https://developers.google.com/civic-information) to do representative lookup. I intend to implement the database in [PostgreSQL](https://www.postgresql.org/)  
+This site is [Flask](https://flask.palletsprojects.com/en/2.3.x/) on the backend. It uses Google's [Civic Information API](https://developers.google.com/civic-information) to do representative lookup. The database is implemented in [PostgreSQL](https://www.postgresql.org/).
 I'm not looking for contributors at the moment, but, assuming this project gets some legs under it, I plan to solicit letters for the site. More letters and more authors means more variety as well as more passion.
 <br />
 <br />
 
 ### Acknowledgements and Licenses
 
-1. Congressional data from https://github.com/unitedstates/congress-legislators
+1. Congressional data from <https://github.com/unitedstates/congress-legislators>
     - [Creative Commons Zero v1.0 Universal](https://github.com/unitedstates/congress-legislators/blob/main/LICENSE)
-2. StateFace font by ProPublica from https://propublica.github.io/stateface/
+2. StateFace font by ProPublica from <https://propublica.github.io/stateface/>
     - [MIT License](https://github.com/propublica/stateface/blob/master/LICENSE.txt)
 3. StateFace replacement/prepend CSS by [Paul Smith](https://github.com/paulsmith)
+4. W3-CSS from <https://www.w3schools.com/w3css/>
 
-  
   <br />
 
 ---
