@@ -40,7 +40,8 @@ CREATE TABLE IF NOT EXISTS us_congress (
     ballotpedia_id text UNIQUE,
     washington_post_id text UNIQUE,
     icpsr_id integer UNIQUE,
-    wikipedia_id text UNIQUE
+    wikipedia_id text UNIQUE,
+    google_api_name text
     );
 
 CREATE TABLE IF NOT EXISTS letter_part (
