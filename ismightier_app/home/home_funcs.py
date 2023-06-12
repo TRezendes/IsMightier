@@ -70,7 +70,15 @@ def GetFedRepInfo(df):
     for name in repsToGet:
         obj=None
         row=None
-
+        obj=db.session.execute(db.select(USCongressTbl).where(USCongressTbl.google_api_name==name)).scalars()
+        for row in obj:
+            bgID=None
+            faxNum=None
+            faxURL=None
+            bgID=row.bioguide_id
+            faxNum=row.fax_number
+            faxURL=row.fax_zero_url
+        """
         # All of the print statements are debug nonsense. Remove them once you solve it. \/ \/ \/ \/ \/ \/ \/ \/
         print(name)
         splits=name.split(' ')
@@ -84,12 +92,13 @@ def GetFedRepInfo(df):
             print(row.bioguide_id)
             print(row.fax_number)
             print(row.fax_zero_url)
-            print(row,'\n')
+            print(row,'n')
 
             # All of the print statements are debug nonsense. Remove them once you solve it. /\ /\ /\ /\ /\ /\ /\ /\
             bgID=row.bioguide_id
             faxNum=row.fax_number
             faxURL=row.fax_zero_url
+        """
         if bgID:
             bioGuideIDs[name]=bgID
         if faxNum:
