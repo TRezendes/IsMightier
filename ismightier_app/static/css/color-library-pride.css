@@ -467,3 +467,56 @@
 .pride-polysexual-blue-text {
     color: #1594f6;
 }
+
+.pride-genderqueer-lavender {
+    color: #ffffff;
+    background-color: #b57edc;
+}
+.pride-genderqueer-white {
+    color: #000000;
+    background-color: #ffffff;
+}
+.pride-genderqueer-green {
+    color: #ffffff;
+    background-color: #4a8123;
+}
+
+.pride-genderqueer-lavender-text {
+    color: #b57edc;
+}
+.pride-genderqueer-white-text {
+    color: #ffffff;
+}
+.pride-genderqueer-green-text {
+    color: #4a8123;
+}
+
+.pride-nonbinary-yellow {
+    color: #000000;
+    background-color: #fcf434;
+}
+.pride-nonbinary-white {
+    color: #000000;
+    background-color: #ffffff;
+}
+.pride-nonbinary-purple {
+    color: #ffffff;
+    background-color: #9c59d1;
+}
+.pride-nonbinary-black {
+    color: #ffffff;
+    background-color: #2c2c2c;
+}
+
+.pride-nonbinary-yellow-text {
+    color: #fcf434;
+}
+.pride-nonbinary-white-text {
+    color: #ffffff;
+}
+.pride-nonbinary-purple-text {
+    color: #9c59d1;
+}
+.pride-nonbinary-black-text {
+    color: #2c2c2c;
+}

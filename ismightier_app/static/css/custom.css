@@ -25,7 +25,7 @@ h2 {
 }
 
 a:hover {
-    text-shadow: 1px 1px 5px #f5a9b8aa; /* pride-helms-pink */
+    text-shadow: 1px 1px 5px #f5a9b8aa; /* pride-trans-pink */
 }
 
 a:active {
@@ -60,7 +60,7 @@ a[href^="tel:"]:before {
 .form-line-input {
 	border-radius: 5px;
 	border: 1;
-    border-color: #f5a9b8; /* pride-helms-pink */
+    border-color: #f5a9b8; /* pride-trans-pink */
 	padding: 2px;
 	height: 2em;
 }
