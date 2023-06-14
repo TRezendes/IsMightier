@@ -1,6 +1,6 @@
 from ismightier_app import db
 from sqlalchemy.dialects import postgresql
-from sqlalchemy import PrimaryKeyConstraint
+from sqlalchemy import PrimaryKeyConstraint, text
 
 db.reflect()
 
@@ -16,6 +16,22 @@ class LetterPartTbl(db.Model):
         'autoload_with': db.engine
     }
 
+# Query Factory for form QuerySelect field
+def getSubjects():
+    subjects = db.session.execute(db.select.distinct(LetterPartTbl.subject).all())
+    return subjects
+
+def getLevels():
+    levels = db.session.execute(db.select(LetterPartTbl.government_level).all())
+    return levels
+
+def getBills():
+    bills = db.session.execute(db.select.distinct(LetterPartTbl.bill_referenced).all())
+    return bills
+
+
+
+
 class RepresentativeSentimentTbl(db.Model):
     __tablename__ = 'representative_sentiment'
     #__table_args__ = (
@@ -29,13 +45,17 @@ class RepresentativeSentimentTbl(db.Model):
             'autoload_with': db.engine
         }
     #)
-    
+
 class SentimentLevelTbl(db.Model):
     __tablename__ = 'letter_part'
     __table_args__ = {
         'autoload_with': db.engine
     }
     
+def getSentiments():
+    sentiments = db.session.execute(db.select(SentimentLevelTbl.description).all())
+    return sentiments
+
 class FederalSponsorTbl(db.Model):
     __tablename__ = 'federal_sponsor'
     #__table_args__ = (
