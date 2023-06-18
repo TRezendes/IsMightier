@@ -93,3 +93,7 @@ ALTER TABLE representative_sentiment
     ADD CONSTRAINT fkey_representativesentiment_uscongress FOREIGN KEY(bioguide_id) REFERENCES us_congress(bioguide_id),
     ADD CONSTRAINT fkey_representativesentiment_sentimentlevel FOREIGN KEY(sentiment) REFERENCES sentiment_level(level)
 ;	
+
+ALTER TABLE letter_part
+    ADD COLUMN color text
+;
