@@ -27,6 +27,7 @@
 {% endblock %}
 {% block title %}Your Letter{% endblock %}
 {% block content %}
+{#     
     <div class="centered">
         This is some content for the Letter Page
     </div>
@@ -34,6 +35,15 @@
         <p class="centered"><img style="width: 75%;" src="https://i.etsystatic.com/29493774/r/il/da6bf6/3129969106/il_1140xN.3129969106_azjk.jpg" alt="Background is black wwith diagonal bars in the colors of the rainbow Pride flag running up from left to right. White text in a handwritten-like font says 'No cops at Pride." /></p>
         <h1 class="rainbow-text-loop">No Cops at Pride</h1>
         <p class="smaller"> Look, it's an image!</p>
+    </div> #}
+
+    <div class="centered letter-body">
+        <p class="letter-salutation">Dear {{ namedRep.iloc[0]['title'] }} {{ namedRep.iloc[0]['name'] }},</p>
+        {% for selector in selectors %}
+            <p class="letter-paragraph" style="background-color: {{ letterDict[selector]['color'] }};">
+                {{ letterDict[selector]['text'] }}
+            </p>
+        {% endfor %}
     </div>
 
 {% block footer %}

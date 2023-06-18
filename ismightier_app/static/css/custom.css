@@ -229,3 +229,20 @@ div.error {
     -ms-transform: scale(1, -1);
     transform: scale(1, -1);
 }
+
+.letter-body {
+    width: 75%;
+    margin: 50px;
+    padding: 10px;
+}
+
+.letter-body p {
+    text-align: left;
+}
+.letter-paragraph {
+    text-indent: 2rem;
+}
+.letter-salutation {
+    font-size: larger;
+    margin-left:-1rem;
+}

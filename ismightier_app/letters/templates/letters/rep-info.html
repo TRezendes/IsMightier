@@ -65,9 +65,13 @@
     <p><a href="#" onclick="history.back()" style="text-decoration: none;"><span class="larger flipV">&#8617;&nbsp;&nbsp;&nbsp;</span><span style="text-decoration: underline;">Return to List of Representatives</span></a></p>
 </div>
 <div class="w3-col w3-padding s12 m12 l9">
+    {#
         <div style="height: 100%; width: 100%">
             <iframe src="{{ url_for('letters.letter') }}" width="100%" style="display: block; border: none; width: 100%; height: 75vh;"></iframe>
         </div>
+    #}
+    {% include ['letters/letter.html'] %}
+
 </div>
 
 
