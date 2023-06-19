@@ -1,0 +1,10 @@
+@page { size: letter; margin: 1cm }
+
+body div {
+    display: none;
+}
+
+.letter-body {
+    display: block;
+}
+

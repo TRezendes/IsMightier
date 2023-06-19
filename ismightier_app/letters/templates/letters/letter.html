@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block stylesheets %}
+{# 
     <style>
     .rainbow-text-loop {
         font-size: 4rem;
@@ -24,6 +25,7 @@
         100%{color: #004dff;}
     }
     </style>
+    #}
 {% endblock %}
 {% block title %}Your Letter{% endblock %}
 {% block content %}
@@ -36,14 +38,19 @@
         <h1 class="rainbow-text-loop">No Cops at Pride</h1>
         <p class="smaller"> Look, it's an image!</p>
     </div> #}
-
     <div class="centered letter-body">
-        <p class="letter-salutation">Dear {{ namedRep.iloc[0]['title'] }} {{ namedRep.iloc[0]['name'] }},</p>
+        <p class="letter-salutation">[Your Name Here]<br />{{ lookupAddress }}</p>
+        {% if salutationTitle %}
+            <p class="letter-salutation">Dear {{ salutationTitle }} {{ salutationName }},</p>
+        {% else %}
+            <p class="letter-salutation">Dear {{ namedRep.iloc[0]['name'] }},</p>
+        {% endif %}
         {% for selector in selectors %}
             <p class="letter-paragraph" style="background-color: {{ letterDict[selector]['color'] }};">
                 {{ letterDict[selector]['text'] }}
             </p>
         {% endfor %}
+        <p>Sincerely,<br />[Your Name Here]</p>
     </div>
 
 {% block footer %}

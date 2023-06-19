@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Representatives{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/weasyprint.css') }}?v=0.1">
+{% endblock %}
 {% block content %}
 
 <div class="w3-bar pride-trans-blue w3-responsive">
@@ -71,6 +74,9 @@
         </div>
     #}
     {% include ['letters/letter.html'] %}
+
+    {# WeasyPrint does not work under Windows 10. Stupid Windows. #}
+    {# <a href="{{ url_for('letters.pdf_print') }}">Get Letter as PDF</a> #}
 
 </div>
 
