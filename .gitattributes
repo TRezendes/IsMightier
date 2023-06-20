@@ -1,2 +1,2 @@
 # Exclude w3.css from GitHub repo language statistics
-ismightier_app/static/css/w3.css -linguist-vendored
+ismightier_app/static/css/w3.css linguist-vendored
