@@ -29,8 +29,12 @@ This project is only just beginning. I have several goals:
 3. Make it simple to edit or customize a letter if a constituent wants to and then download the letter as a PDF.
 4. Match certain letters/letter parts in the database to particular bills and the representatives that are most connected to them.
 
-The basics of this site should be fairly easy to put together. I hope to have the representative search done first, followed by some whole letters that can be personalized to a particular representative. I will start with Pennsylvania, as that is my home state, and then expand to states with the most dramatically awful pending legislation.  
-  
+The basics of this site should be fairly easy to put together. I hope to have the representative search done first, followed by some whole letters that can be personalized to a particular representative. I will start with Pennsylvania, as that is my home state, and then expand to states with the most dramatically awful pending legislation.
+
+~
+Update 6/20/2023: Representative lookup is complete. Basic letter construction works, but I am working on improving it. Once I know exactly how the system will build letters, I will begin writing (and potentially soliciting) the letter parts.
+ ~
+ 
 ### The technicals
 
 This site is [Flask](https://flask.palletsprojects.com/en/2.3.x/) on the backend. It uses Google's [Civic Information API](https://developers.google.com/civic-information) to do representative lookup. The database is implemented in [PostgreSQL](https://www.postgresql.org/).
