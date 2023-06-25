@@ -1,0 +1,45 @@
+.fa-icon span {
+    display: inline-block;
+    margin-left: 10px;
+}
+.uc-icon::before {
+    font-size: larger;
+    margin-right: 10px;
+}
+
+.fa-icon::before {
+    display: none;
+    font: var(--fa-font-solid);
+}
+
+.fa-icon-democrat::before {
+    content: "\f747";
+}
+
+.fa-icon-republican::before {
+    content: "\f75e";
+}
+
+.fa-icon-globe::before {
+    content: "\f0ac";
+}
+
+.fa-icon-fax::before {
+    content: "\f1ac";
+}
+
+.uc-icon-mail::before { /* This is a standard unicode character, not a font-awesome icon. */
+    content: "\2709";
+}
+
+.uc-icon-back::before { /* This is a standard unicode character, not a font-awesome icon. */
+    content: "\21a9";
+    display: inline-block;
+    transform: scale(1, -1);
+    -moz-transform: scale(1, -1);
+    -webkit-transform: scale(1, -1);
+    -o-transform: scale(1, -1);
+    -ms-transform: scale(1, -1);
+    transform: scale(1, -1);
+}
+

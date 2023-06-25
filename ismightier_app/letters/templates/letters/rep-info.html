@@ -13,7 +13,7 @@
 <div class="w3-col w3-padding s12 m12 l3" style="text-align: left;">
     <h4>
         {{ namedRep.iloc[0]['name'] }}<br />
-        {% if 'President' in namedRep.iloc[0]['title'] %}
+        {% if 'President of the United States' in namedRep.iloc[0]['title'] %}
             <span class="smaller stateface stateface-us">{{ namedRep.iloc[0]['title'] }}</span>
         {% else %}
             <span class="smaller stateface stateface-{{ lookupState|lower }}">{{ namedRep.iloc[0]['title'] }}</span>
@@ -25,12 +25,12 @@
                 {% if 'phone' in field %}
                     <a href="tel:+1{{ namedRep.iloc[0][field]|replace('(','')|replace(')','')|replace(' ','')|replace('-','') }}">{{ namedRep.iloc[0][field] }}</a><br />
                 {% elif 'url' in field %}
-                    <a href="{{ namedRep.iloc[0][field] }}" target="_blank" style="text-decoration: none;"><i class="fa-solid fa-globe" style="color: #000000;"></i>&nbsp;&nbsp;&nbsp;<span style="text-decoration: underline;">{{ namedRep.iloc[0][field] }}</span></a><br />
+                    <a href="{{ namedRep.iloc[0][field] }}" target="_blank" style="text-decoration: none;"><span class="fa-icon fa-icon-globe"><span style="text-decoration: underline;">{{ namedRep.iloc[0][field] }}</span></span></a><br />
                 {% elif 'party' in field %}
                     {% if namedRep.iloc[0][field] == 'Democratic Party' %}
-                        <i class="fa-solid fa-democrat"></i>&nbsp;&nbsp;&nbsp;Democrat
+                        <span class="fa-icon fa-icon-democrat"><span>Democrat</span></span>
                     {% elif namedRep.iloc[0][field] == 'Republican Party' %}
-                        <i class="fa-solid fa-republican"></i>&nbsp;&nbsp;&nbsp;Republican
+                        <span class="fa-icon fa-icon-republican"><span>Republican</span></span>
                     {% else %}
                         {{ namedRep.iloc[0][field] }}
                     {% endif %}<br />
@@ -45,7 +45,7 @@
             {% if namedRep.iloc[0][field] %}
                 {% if 'line' in field %}
                     {% if 'line1' in field %}
-                        <span class="larger">&#9993;&nbsp;&nbsp;&nbsp;</span>{{ namedRep.iloc[0][field] }}<br />
+                        <span class="uc-icon uc-icon-mail"><span>{{ namedRep.iloc[0][field] }}</span></span><br />
                     {% else %}
                         {{ namedRep.iloc[0][field] }}<br />
                     {% endif %}
@@ -59,13 +59,12 @@
             {% endif %}
         {% endfor %}
         {% if namedRep.iloc[0]['fax_number'] %}
-        {{ namedRep.iloc[0]['fax_number'] }}
             <p>
-                send a fax via FaxZero:<br /><a href="{{ namedRep.iloc[0]['fax_zero_url'] }}" target="_blank" style="text-decoration: none;"><i class="fa-solid fa-fax" style="color: #000000;"></i>&nbsp;&nbsp;&nbsp;<span style="text-decoration: underline;">{{ '(' + namedRep.iloc[0]['fax_number'][0:3] + ') ' + namedRep.iloc[0]['fax_number'][3:6] + '-' + namedRep.iloc[0]['fax_number'][6:10] }}</span></a>
+                send a fax via FaxZero:<br /><a href="{{ namedRep.iloc[0]['fax_zero_url'] }}" target="_blank" style="text-decoration: none;"><span class="fa-icon fa-icon-fax"><span style="text-decoration: underline;">{{ '(' + namedRep.iloc[0]['fax_number'][0:3] + ') ' + namedRep.iloc[0]['fax_number'][3:6] + '-' + namedRep.iloc[0]['fax_number'][6:10] }}</span></span></a>
             </p>
         {% endif %}
     </p>
-    <p><a href="#" onclick="history.back()" style="text-decoration: none;"><span class="larger flipV">&#8617;&nbsp;&nbsp;&nbsp;</span><span style="text-decoration: underline;">Return to List of Representatives</span></a></p>
+    <p><a href="#" onclick="history.back()" style="text-decoration: none;"><span class="uc-icon uc-icon-back"><span style="text-decoration: underline;">Return to List of Representatives</span></span></a></p>
 </div>
 <div class="w3-col w3-padding s12 m12 l9">
     {#
