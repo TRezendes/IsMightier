@@ -33,23 +33,19 @@ def rep_info(name):
             fieldList.append(col)
 
     ########## This section for included template. For iFrame, remove this section and use separate route. #####
-    letterDict=BuildLetter(namedRep,lookupAddress)
+    letterDefaultText=BuildLetter(namedRep,lookupAddress)
     ##################################################
-    if letterDict['salutationTitle']:
-        salutation=f"Dear {letterDict['salutationTitle']} {letterDict['salutationName']},"
-    else:
-        salutation=f"Dear {letterDict['salutationName']},"
-    letterDefaultText=f"""
-    Dear {salutationTitle} {}
-    """
+    form=LetterOptionsForm(default_value=letterDefaultText)
     return render_template(
-        '/letters/rep-info.html',
+        '/letters/rep-info.jhtml',
+        form=form,
         namedRep=namedRep,
         fieldList=fieldList,
         addressList=addressList,
         lookupState=lookupState,
         ###########
-        letterDict=letterDict
+        #letterDict=letterDict,
+        letterDefaultText=letterDefaultText
         ###########
     )
 
@@ -76,12 +72,11 @@ def letter():
         partDict['color']=partColor + '50'
         letterDict[selector]=partDict
     return render_template(
-        '/letters/letter.html',
-        selectors=selectors,
-        letterDict=letterDict
+        '/letters/letter.jhtml',
+        letterDefaultText=letterDefaultText
     )
 
 @letters.route('<name>/pdf')
 def pdf_print(name):
-    html = render_template('/letters/letter.html')
+    html = render_template('/letters/letter.jhtml')
     return render_pdf(HTML(string=html))

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.jhtml" %}
 {% block title %}🖋️{% endblock %}
 {% block content %}
 
@@ -17,6 +17,7 @@
         The loud earth breathless!—Take away the sword—<br />
         <br />
         States can be saved without it!<br />
+        <a style="display: inline-block; margin-top: 10px;" class="smaller" href="https://archive.org/details/richelieuorconsp00lyttiala/page/38/mode/2up" target="_blank"><em>Richelieu; or The Conspiracy</em>, Edward Bulwer-Lytton</a>
     </blockquote>
     <div class="w3-col s12 m12 l8">
         <h2>Direct Action is Important, but We Can't Always Fight</h2>

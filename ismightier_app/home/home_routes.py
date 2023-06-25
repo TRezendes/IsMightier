@@ -21,7 +21,7 @@ def homepage():
             url_for('home.results')
         )
     return render_template(
-        '/home/index.html',
+        '/home/index.jhtml',
         form=form)
 
 @home.route('/representatives')
@@ -42,7 +42,7 @@ def results():
             shortCols=[column for column in columnList if column not in ['name','party','title','fax_zero_url']]
             session['repDF']=repDF.to_dict(orient='tight')
             return render_template(
-                '/home/representatives.html',
+                '/home/representatives.jhtml',
                 lookupAddress=lookupAddress,
                 columnList=columnList,
                 shortCols=shortCols,

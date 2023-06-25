@@ -9,17 +9,17 @@ db = SQLAlchemy()
 csrf = CSRFProtect()
 
 def bad_request_error(e):
-    return render_template('400.html'), 400
+    return render_template('400.jhtml'), 400
 def forbidden_error(e):
-    return render_template('403.html'), 403
+    return render_template('403.jhtml'), 403
 def page_not_found_error(e):
-    return render_template('404.html'), 404
+    return render_template('404.jhtml'), 404
 def method_not_allowed_error(e):
-    return render_template('405.html'), 405
+    return render_template('405.jhtml'), 405
 def im_a_teapot_error(e):
-    return render_template('418.html'), 418
+    return render_template('418.jhtml'), 418
 def server_error(e):
-    return render_template('500.html'), 500
+    return render_template('500.jhtml'), 500
 
 def create_app():
     app = Flask(__name__, subdomain_matching=True)
@@ -70,11 +70,19 @@ def create_app():
     # Is this thing on?
     @app.route('/232')
     def its_alive():
-        return render_template('itsAlive.html')
+        return render_template('itsAlive.jhtml')
 
     @app.route('/page_check/<page>')
     def page_check(page):
         return render_template(page)
+
+    @app.route('/inspect-session')
+    def inspect_session():
+        sessionDict=session
+        return render_template(
+        'inspect_session.jhtml',
+        sessionDict=sessionDict
+        )
 
     @app.route('/')
     def home():

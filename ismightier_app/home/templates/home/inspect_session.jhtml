@@ -1,0 +1,27 @@
+{% extends 'base.jhtml' %}
+{% block content %}
+    <h1>Your Session</h1>
+    <div class="flex-container">
+    {% for key in sessionDict %}
+        <div class="session-entry">
+            {% if session[key] is mapping %}
+                <h3>{{ key }}</h3>
+                <div class="flex-container">
+                    {% for subKey in session[key] %}
+                    <div class="session-entry">
+                        <h4>{{ subKey }}</h4>
+                        <p>{{ session[key][subKey] }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h3>{{ key }}</h3>
+                <p>{{ session[key] }}</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+    <a href="{{ url_for('home.homepage') }}"><em><h1>Home</h1></em></a>
+    {% block footer %}
+    {% endblock %}
+{% endblock %}

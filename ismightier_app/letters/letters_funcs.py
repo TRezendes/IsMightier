@@ -1,5 +1,6 @@
 from ismightier_app.models import USCongressTbl,LetterPartTbl,RepresentativeSentimentTbl,SentimentLevelTbl,FederalSponsorTbl,StateSponsorTbl
 from sqlalchemy import and_,create_engine,or_
+from numpy.random import randint
 from ismightier_app import db
 from flask import current_app
 from uuid import uuid4
@@ -7,9 +8,11 @@ import pandas as pd
 import numpy as np
 import requests
 import json
+import os
 
 
-def BuildLetter(namedRep: pandas.core.frame.DataFrame, address: string) -> dict:
+def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str) -> str:
+    ## Randomy determine how the letter will be built
     letterType=randint(3)
     if letterType==0:
         selectors=['whole']
@@ -18,14 +21,15 @@ def BuildLetter(namedRep: pandas.core.frame.DataFrame, address: string) -> dict:
     elif letterType==2:
         selectors=['intro','middle1','middle2','conclusion']
     letterDict={}
+    ## For each piece of the letter required, select all matching pieces from the database and select one at random
     for selector in selectors:
         partDict={}
         records=db.session.execute(db.select(LetterPartTbl).where(LetterPartTbl.part_placement==selector)).scalars().all()
         numRecords=len(records)
         randIndex=randint(numRecords)
         partText=records[randIndex].part_text
-        partDict[selector]=partText
-        letterDict['parts']=partDict
+        letterDict[selector]=partText
+    ## Set salutationTitle bsaed on the role of the representative addressee
     if 'Senator' in namedRep.iloc[0]['title']:
         letterDict['salutationTitle']='Senator'
     elif 'Representative' in namedRep.iloc[0]['title']:
@@ -44,6 +48,21 @@ def BuildLetter(namedRep: pandas.core.frame.DataFrame, address: string) -> dict:
         letterDict['salutationTitle']='Mayor'
     else:
         letterDict['salutationTitle']=None
+    ## Set salutationName equal to the representative addressee's last name
     letterDict['salutationName']=namedRep.iloc[0]['name'].split(' ')[-1]
+##### If the function builds the letter text, then storing the lookup address in the dictionary isn't necessary ####
     letterDict['address']=address
-    return letterDict
+    ## Build the text of the letter from the parts saved in letterDict
+    if letterDict['salutationTitle']:
+        salutation=f"Dear {letterDict['salutationTitle']} {letterDict['salutationName']},"
+    else:
+        salutation=f"Dear {letterDict['salutationName']},"
+    parabreak=f'{os.linesep}{os.linesep}    '
+    letterDefaultText=f"""[Your Name Here]{os.linesep}{address}{os.linesep}{os.linesep}{salutation}{parabreak}{parabreak.join({f'{letterDict[selector]}' for selector in selectors})}{os.linesep}{os.linesep}Sincerely,{os.linesep}[Your Name Here]"""
+    print(letterDict)
+
+
+    return letterDefaultText
+
+
+
