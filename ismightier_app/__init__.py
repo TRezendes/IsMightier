@@ -2,7 +2,6 @@ from flask import Flask, render_template, url_for, redirect, session
 from rikeripsum.rikeripsum import generate_paragraph as RikerIpsum
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
-
 import json
 
 db = SQLAlchemy()
@@ -75,14 +74,6 @@ def create_app():
     @app.route('/page_check/<page>')
     def page_check(page):
         return render_template(page)
-
-    @app.route('/inspect-session')
-    def inspect_session():
-        sessionDict=session
-        return render_template(
-        'inspect_session.jhtml',
-        sessionDict=sessionDict
-        )
 
     @app.route('/')
     def home():

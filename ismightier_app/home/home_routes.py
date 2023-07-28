@@ -59,6 +59,17 @@ def results():
         url_for('home.homepage')
     )
 
+@home.route('/inspect-session')
+def inspect_session():
+    sessionDict=session
+    return render_template(
+    '/home/inspect_session.jhtml',
+    sessionDict=sessionDict
+    )
+
+@home.route('/privacy-policy')
+def privacy_policy():
+    return render_template('home/privacy.jhtml')
 
 
 # https://www.googleapis.com/civicinfo/v2/representatives?key=[API-KEY]&address=1035+wabank+st,+lancaster,+pa+17603&roles=headOfState&roles=headOfGovernment&roles=deputyHeadOfGovernment&roles=executiveCouncil&roles=legislatorLowerBody&roles=legislatorUpperBody&roles=schoolBoard

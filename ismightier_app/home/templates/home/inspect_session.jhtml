@@ -1,14 +1,26 @@
 {% extends 'base.jhtml' %}
+{% block title %}
+Inspect Session Dictionary
+{% endblock %}
 {% block content %}
     <h1>Your Session</h1>
     <div class="flex-container">
     {% for key in sessionDict %}
-        <div class="session-entry">
+        {% set iter_var = 1 %}
+        {% if loop.index % 3 == 0 %}
+            {% set iter_var = 3 %}
+        {% elif loop.index % 2 == 0 %}
+            {% set iter_var = 2 %}
+        {% elif loop.index % 1 == 0 %}
+            {% set iter_var = 1 %}
+        {% endif %}
+
+        <div class="session-entry-{{ iter_var }}">
             {% if session[key] is mapping %}
                 <h3>{{ key }}</h3>
                 <div class="flex-container">
                     {% for subKey in session[key] %}
-                    <div class="session-entry">
+                    <div class="session-entry-{{ iter_var }}">
                         <h4>{{ subKey }}</h4>
                         <p>{{ session[key][subKey] }}</p>
                     </div>

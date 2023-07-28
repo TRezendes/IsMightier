@@ -242,8 +242,21 @@ div.error {
     margin-left:-1rem;
 }
 
-.session-entry {
-    background-color: #d6027025;
+
+.session-entry-1 {
+    background-color: #d6027050;
+    border: 20px;
+    border-radius: 10px 100px;
+    padding: 30px;
+}
+.session-entry-2 {
+    background-color: #9b4f9650;
+    border: 20px;
+    border-radius: 10px 100px;
+    padding: 30px;
+}
+.session-entry-3 {
+    background-color: #0038a850;
     border: 20px;
     border-radius: 10px 100px;
     padding: 30px;

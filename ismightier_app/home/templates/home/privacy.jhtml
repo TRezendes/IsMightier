@@ -1,0 +1,30 @@
+{% extends "base.jhtml" %}
+{% block title %}
+Privacy Policy
+{% endblock %}
+
+{% block content %}
+<div class="w3-bar pride-trans-blue w3-responsive">
+    <h1 class="font-herr-von-muellerhoff pride-trans-white-text w3-jumbo"><a href="{{ url_for('home.homepage') }}">Is Mightier</a></h1>
+</div>
+<div class="w3-row-padding" style="text-align: left;">
+    <div class="w3-col l2 m2 w3-hide-small">
+        &nbsp;
+    </div>
+    <div class="w3-col l8 m8 s12 w3-mobile">
+        <p>IsMightier.org does not store any user information on its server. All stored information is kept on the client computer and only for the length of the session. Information stored in the Session may include (but is not necessarily limited to):</p>
+        <div class="w3-row-padding w3-mobile">
+            <ul class="w3-ul w3-col l8 m8 s12 w3-mobile">
+                <li>A <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery#Prevention" style="text-decoration: none;"><span style="text-decoration: underline;">CSRF token</span>&nbsp;&nbsp;<i class="fa-solid fa-arrow-up-right-from-square smaller"></i></a></li>
+                <li>The text entered in the Address Search field on the homepage</li>
+                <li>The abbreviation for the US State of a searched address</li>
+                <li>Data about the elected representatives for a searched address and metadata for interacting with this data</li>
+                <li>The text of the form fields (including the text of the generated letter and any edits made to it) on the Letter page</li>
+            </ul>
+        </div>
+        <p>The contents of the Session dictionary can be viewed at any time by visiting <a href="{{ url_for('home.inspect_session') }}">https://IsMightier.org/inspect-session</a></p>
+        <p> IsMightier.org does not transmit any data to third parties without explicit user action. The only data transmitted to a third party is the text of the Address Search field on the homepage. This text is used to conduct a search via the <a href="https://developers.google.com/civic-information" style="text-decoration: none"><span style="text-decoration: underline;">Google Civic Information API</span>&nbsp;&nbsp;<i class="fa-solid fa-arrow-up-right-from-square smaller"></i></a>.</p>
+    </div>
+</div>
+</div>
+{% endblock %}
