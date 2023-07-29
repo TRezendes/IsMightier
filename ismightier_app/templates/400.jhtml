@@ -1,4 +1,4 @@
-{% extends "error-template.html" %}
+{% extends "error-template.jhtml" %}
 {% block title %}{{ super() }}{{ self.errorNum() }}{% endblock %}
 
 {% block errorNum %}400{% endblock %}

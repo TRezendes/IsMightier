@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.jhtml" %}
 {% block stylesheets %}
 {# 
     <style>

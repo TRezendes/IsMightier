@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.jhtml" %}
 
 {% block title %}Error | {% endblock %}
 {% block content %}

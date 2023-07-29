@@ -96,7 +96,7 @@
             &nbsp;
         </div>
         {% block footer %}
-        {% include ['footer.html'] %}
+        {% include ['footer.jhtml'] %}
         {% endblock %}
     </div>
 </body>

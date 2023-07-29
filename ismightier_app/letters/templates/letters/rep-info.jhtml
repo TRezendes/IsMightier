@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.jhtml" %}
 {% block title %}Representatives{% endblock %}
 {% block stylesheets %}
 <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/weasyprint.css') }}?v=0.1">
@@ -59,7 +59,6 @@
             {% endif %}
         {% endfor %}
         {% if namedRep.iloc[0]['fax_number'] %}
-        {{ namedRep.iloc[0]['fax_number'] }}
             <p>
                 send a fax via FaxZero:<br /><a href="{{ namedRep.iloc[0]['fax_zero_url'] }}" target="_blank" style="text-decoration: none;"><i class="fa-solid fa-fax" style="color: #000000;"></i>&nbsp;&nbsp;&nbsp;<span style="text-decoration: underline;">{{ '(' + namedRep.iloc[0]['fax_number'][0:3] + ') ' + namedRep.iloc[0]['fax_number'][3:6] + '-' + namedRep.iloc[0]['fax_number'][6:10] }}</span></a>
             </p>
@@ -73,7 +72,7 @@
             <iframe src="{{ url_for('letters.letter') }}" width="100%" style="display: block; border: none; width: 100%; height: 75vh;"></iframe>
         </div>
     #}
-    {% include ['letters/letter.html'] %}
+    {% include ['letters/letter.jhtml'] %}
 
     {# WeasyPrint does not work under Windows 10. Stupid Windows. #}
     {# <a href="{{ url_for('letters.pdf_print') }}">Get Letter as PDF</a> #}
