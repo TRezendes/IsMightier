@@ -14,6 +14,11 @@ import requests
 import json
 
 
+# @letters.after_request
+# def add_security_headers(resp):
+#     resp.headers['Content-Security-Policy']='default-src \'self\' fonts.gstatic.com *.googleapis.com kit.fontawesome.com'   
+#     return resp
+
 @letters.route('/<name>', methods=['GET', 'POST'])
 def rep_info(name):
     repDF=session['repDF']

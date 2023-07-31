@@ -12,8 +12,9 @@ import os
 
 
 def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str) -> str:
-    ## Randomy determine how the letter will be built
-    letterType=randint(3)
+    ## Randomly determine how the letter will be built
+    #letterType=randint(3)
+    letterType=0 # Let's just use whole letters for now (7/28/23)
     if letterType==0:
         selectors=['whole']
     elif letterType==1:
@@ -54,9 +55,10 @@ def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str) -> str:
     letterDict['address']=address
     ## Build the text of the letter from the parts saved in letterDict
     if letterDict['salutationTitle']:
-        salutation=f"Dear {letterDict['salutationTitle']} {letterDict['salutationName']},"
+        addressee=f"{letterDict['salutationTitle']} {letterDict['salutationName']}"
     else:
-        salutation=f"Dear {letterDict['salutationName']},"
+        addressee=f"{letterDict['salutationName']}"
+    salutation=f"Dear {addressee},"
     parabreak=f'{os.linesep}{os.linesep}    '
     letterDefaultText=f"""[Your Name Here]{os.linesep}{address}{os.linesep}{os.linesep}{salutation}{parabreak}{parabreak.join({f'{letterDict[selector]}' for selector in selectors})}{os.linesep}{os.linesep}Sincerely,{os.linesep}[Your Name Here]"""
     print(letterDict)

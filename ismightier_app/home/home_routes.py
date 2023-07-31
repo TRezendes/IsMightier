@@ -11,6 +11,12 @@ import requests
 import json
 
 
+# @home.after_request
+# def add_security_headers(resp):
+#     resp.headers['Content-Security-Policy']='default-src \'self\' fonts.gstatic.com *.googleapis.com kit.fontawesome.com'
+#     return resp
+
+
 @home.route('/', methods=['GET', 'POST'])
 def homepage():
     form=RepLookupForm()
@@ -62,10 +68,23 @@ def results():
 @home.route('/inspect-session')
 def inspect_session():
     sessionDict=session
+    print(sessionDict)
     return render_template(
     '/home/inspect_session.jhtml',
     sessionDict=sessionDict
     )
+
+@home.route('/pop-session')
+def pop_session():
+    sessionDict=session
+    keyList=[]                  # Attempting to use
+    for key in sessionDict:     # "for key in sessionDict:
+        keyList.append(key)     #     session.pop(key)"
+    for key in keyList:         # breaks with "RuntimeError: dictionary changed size during iteration"
+        session.pop(key)        # so store the dictionary keys to a list first and then iterate over the list, not the dictionary itself.
+    return redirect(
+        url_for('home.inspect_session')
+        )
 
 @home.route('/privacy-policy')
 def privacy_policy():

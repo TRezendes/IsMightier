@@ -26,6 +26,9 @@ Inspect Session Dictionary
                     </div>
                     {% endfor %}
                 </div>
+            {% elif key == 'csrf_token'%}
+                <h3>{{ key }}</h3>
+                <p>{% for i in range(23) %}&#x2B27;{% endfor %}</p>
             {% else %}
                 <h3>{{ key }}</h3>
                 <p>{{ session[key] }}</p>
@@ -34,6 +37,7 @@ Inspect Session Dictionary
     {% endfor %}
     </div>
     <a href="{{ url_for('home.homepage') }}"><em><h1>Home</h1></em></a>
+    <a href="{{ url_for('home.pop_session') }}"><em><h3>Clear Session</h3></em></a>
     {% block footer %}
     {% endblock %}
 {% endblock %}
