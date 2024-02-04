@@ -24,7 +24,7 @@ While I hope that *Is Mightier* may someday address many pressing issues facing 
 
 This project is only just beginning. I have several goals:
 
-1. Implement a means for a constituent to look up their current elected representatives. 🗸
+1. Implement a means for a constituent to look up their current elected representatives. ✓
 2. Collect a database of pieces of letters that can be combined to create coherent letters so representatives are not bombarded with identical letters from multiple constituents.
 3. Make it simple to edit or customize a letter if a constituent wants to and then download the letter as a PDF.
 4. Match certain letters/letter parts in the database to particular bills and the representatives that are most connected to them.
