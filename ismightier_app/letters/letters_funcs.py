@@ -30,7 +30,7 @@ def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str) -> str:
         randIndex=randint(numRecords)
         partText=records[randIndex].part_text
         letterDict[selector]=partText
-    ## Set salutationTitle bsaed on the role of the representative addressee
+    ## Set salutationTitle based on the role of the representative addressee
     if 'Senator' in namedRep.iloc[0]['title']:
         letterDict['salutationTitle']='Senator'
     elif 'Representative' in namedRep.iloc[0]['title']:
