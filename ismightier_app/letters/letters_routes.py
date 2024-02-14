@@ -2,7 +2,7 @@ from flask import Blueprint, current_app, flash, redirect, render_template, requ
 from ismightier_app.models import LetterPartTbl
 from wtforms.validators import ValidationError
 ## WeasyPrint does not work under Windows 10. Stupid Windows. ##
-#from flask_weasyprint import HTML, render_pdf   
+from flask_weasyprint import HTML, render_pdf
 from sqlalchemy import and_,create_engine,or_
 from .letters_forms import LetterOptionsForm
 from .letters_funcs import BuildLetter
@@ -16,7 +16,7 @@ import json
 
 # @letters.after_request
 # def add_security_headers(resp):
-#     resp.headers['Content-Security-Policy']='default-src \'self\' fonts.gstatic.com *.googleapis.com kit.fontawesome.com'   
+#     resp.headers['Content-Security-Policy']='default-src \'self\' fonts.gstatic.com *.googleapis.com kit.fontawesome.com'
 #     return resp
 
 @letters.route('/<name>', methods=['GET', 'POST'])
@@ -29,7 +29,7 @@ def rep_info(name):
     lookupState=session['lookupState']
     lookupAddress=session['lookupAddress']
     for col in namedRep.columns:
-        try: 
+        try:
             if col.split('.')[1] in ['city','state','zip','line1','line2']:
                 addressList.append(col)
         except:
