@@ -3,6 +3,6 @@
     <span class="w3-bar-item w3-button"><a href="{{ url_for('home.homepage') }}">Home</a></span>
     <span class="w3-bar-item pride-progress-black-text">|</span>
     <span class="w3-bar-item w3-button"><a href="{{ url_for('home.privacy_policy') }}">Privacy Policy</a></span>
-    <span class="w3-bar-item w3-right"><a href="https://github.com/TRezendes/IsMightier/blob/main/LICENSE" style="text-decoration: none;" class="w3-button">&copy;2023</a>  <a href="https://timothy.rezendes.info" class="w3-button">Timothy Rezendes</a></span>
+    <span class="w3-bar-item w3-right"><a href="https://github.com/TRezendes/IsMightier/blob/main/LICENSE" style="text-decoration: none;" class="w3-button">&copy;2023&ndash;2024</a>  <a href="https://timothy.rezendes.info" class="w3-button">Timothy Rezendes</a></span>
     <!-- <a href="https://rezendes.info"  class="w3-bar-item w3-right w3-btn w3-round-xxlarge" style="padding-left: 5rem; background-clip: padding-box;">Timothy Rezendes</span></a><span class="w3-bar-item w3-right" style="float: right; margin-right: -4.8rem">&copy;2023 </span> -->
 </div>

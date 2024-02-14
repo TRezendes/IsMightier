@@ -23,6 +23,7 @@ import json
 def rep_info(name):
     repDF=session['repDF']
     repDF=pd.DataFrame.from_dict(repDF, orient='tight')
+    repDF=repDF.replace({float("NaN"): None})
     namedRep=repDF.loc[repDF['name'] == name]
     fieldList=[]
     addressList=[]
@@ -84,4 +85,5 @@ def letter():
 @letters.route('<name>/pdf')
 def pdf_print(name):
     html = render_template('/letters/letter.jhtml')
+    print(html)
     return render_pdf(HTML(string=html))
