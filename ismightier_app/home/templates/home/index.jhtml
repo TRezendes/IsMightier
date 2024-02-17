@@ -1,4 +1,8 @@
 {% extends "base.jhtml" %}
+{% block head %}
+{{ super() }}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{% endblock %}
 {% block title %}🖋️{% endblock %}
 {% block content %}
 
@@ -6,8 +10,7 @@
     <h1 class="font-herr-von-muellerhoff pride-trans-white-text" style="font-size: 128px;">Is Mightier</h1>
 </div>
 <div class="w3-row w3-margin">
-    <blockquote cite="https://archive.org/details/richelieuorconsp00lyttiala/page/38/mode/2up"
-        class="w3-large w3-col s12 m12 l3" style="text-align: left;">
+    <blockquote cite="https://archive.org/details/richelieuorconsp00lyttiala/page/38/mode/2up" class="w3-large w3-col s12 m12 l3" style="text-align: left;">
         True,—This!<br />
         Beneath the rule of men entirely great<br />
         The pen is mightier than the sword. Behold<br />
@@ -25,57 +28,38 @@
         <h3>Start by Finding Your Representatives</h3>
         <form method="POST" novalidate>
             {{ form.csrf_token }}
-            {{ form.address(size=60, placeholder='Address', class_='form-line-input') }}<br />  
+            {{ form.address(size=60, placeholder='Address', class_='form-line-input') }}<br />
             {% if form.address.errors %}
-                {% for error in form.address.errors %}<span class="pride-baker-red-text">{{ error }}{% endfor %}</span><br />
+            {% for error in form.address.errors %}<span class="pride-baker-red-text">{{ error }}{% endfor %}</span><br />
             {% else %}
-                {{ form.address.label }}<br />
+            {{ form.address.label }}<br />
             {% endif %}
             {{ form.submit(class_='w3-margin pride-trans-pink custom-default-button') }}<br />
-            </form>
-            <form method="POST" onsubmit="locateFunction()">
-            <span style="display: none;">{{ form.address }}</span>
-            {{ form.geolocate(class_='w3-margin pride-trans-blue custom-default-button') }}<br />
-            <span id="geoError" class="pride-baker-red-text"></span>
         </form>
+        {# <form method="POST" onsubmit="locateFunction()"> #}
+        {# <form method="POST"> #}
+            <span style="display: none;">{{ geoForm.address }}</span>
+            <button class="w3-margin pride-trans-blue custom-default-button" onclick="locateFunction()">Search Using your Current Location</button><br />
+            {# {{ geoForm.geolocate(class_='w3-margin pride-trans-blue custom-default-button') }}<br /> #}
+            <span id="geoError" class="pride-baker-red-text"></span>
+        {# </form> #}
     </div>
 </div>
 {% endblock %}
 {% block script %}
-var x = document.getElementById("geoError");
+const x = document.getElementById("geoError");
+var position = "";
 
 function locateFunction() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(submitLocation, showError);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
+
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos(position))
+          }
+
+    function pos(position) {
+    console.log(position)
+    x.innerHTML = position }
 }
 
-function submitLocation(position) {
-    formData.set('address', position.coords.latitude + ',' + position.coords.longitude),
-    window.location.href = "/";
-}
-{# 
-function showPosition(position) {
-  x.innerHTML = "Latitude: " + position.coords.latitude + 
-  "<br>Longitude: " + position.coords.longitude;
-} #}
-
-function showError(error) {
-  switch(error.code) {
-    case error.PERMISSION_DENIED:
-      x.innerHTML = "User denied the request for Geolocation."
-      break;
-    case error.POSITION_UNAVAILABLE:
-      x.innerHTML = "Location information is unavailable."
-      break;
-    case error.TIMEOUT:
-      x.innerHTML = "The request to get user location timed out."
-      break;
-    case error.UNKNOWN_ERROR:
-      x.innerHTML = "An unknown error occurred."
-      break;
-  }
-}
 {% endblock %}

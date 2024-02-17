@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 class RepLookupForm(FlaskForm):
     address = StringField(label='Enter Your Address', validators=[InputRequired(message="You must enter an address to find local representatives.")])
     submit = SubmitField(label='Find Your Representatives')
-    geolocate = SubmitField(label='Search Using your Current Location')
 
-#class RepLookupGeo(FlaskForm):
-    
+class RepLookupGeo(FlaskForm):
+    geolocate = SubmitField(label='Search Using your Current Location')
+    address = StringField()

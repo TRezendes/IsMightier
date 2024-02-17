@@ -3,7 +3,7 @@ from .home_funcs import GetFedRepInfo,RepNormal
 from ismightier_app.models import USCongressTbl
 from wtforms.validators import ValidationError
 from sqlalchemy import and_,create_engine,or_
-from .home_forms import RepLookupForm
+from .home_forms import RepLookupForm, RepLookupGeo
 from ismightier_app import db
 import numpy as np
 from . import home
@@ -20,15 +20,24 @@ import json
 @home.route('/', methods=['GET', 'POST'])
 def homepage():
     form=RepLookupForm()
+    geoForm=RepLookupGeo()
     lookupAddress='string'
     if form.validate_on_submit():
+        print(form.address.data)
         session['lookupAddress'] = form.address.data
+        return redirect(
+            url_for('home.results')
+        )
+    if geoForm.validate_on_submit():
+        print(geoForm.address.data)
+        session['lookupAddress'] = geoForm.address.data
         return redirect(
             url_for('home.results')
         )
     return render_template(
         '/home/index.jhtml',
-        form=form)
+        form=form,
+        geoForm=geoForm)
 
 @home.route('/representatives')
 def results():
@@ -102,3 +111,21 @@ def privacy_policy():
 #bioGuideIDs['name']=db.session.execute(db.select(USCongressTbl.bioguide_id).filter_by(or_(and_((USCongressTbl.first_name==splits[0]),USCongressTbl.last_name==splits[1]),and_((USCongressTbl.nickname==splits[0]),USCongressTbl.last_name==splits[1]))))
 
 
+### Geolocation Testing ###
+
+@home.route('/geo-test')
+def geo_test():
+    return render_template('home/geo_test.html')
+
+@home.route('/postmethod', methods=['POST'])
+def postmethod():
+    data=request.get_json()
+    print(data)
+    return jsonify(data)
+
+@home.route('/geopost', methods=['POST'])
+def geopost():
+    print(request)
+    data=request.get_json()
+    print(data)
+    return jsonify(data)
