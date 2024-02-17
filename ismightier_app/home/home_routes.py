@@ -1,5 +1,5 @@
 from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
-from .home_funcs import GetFedRepInfo,RepNormal
+from .home_funcs import GetFedRepInfo, RepNormal
 from ismightier_app.models import USCongressTbl
 from wtforms.validators import ValidationError
 from sqlalchemy import and_,create_engine,or_
@@ -104,21 +104,3 @@ def privacy_policy():
 #bioGuideIDs['name']=db.session.execute(db.select(USCongressTbl.bioguide_id).filter_by(or_(and_((USCongressTbl.first_name==splits[0]),USCongressTbl.last_name==splits[1]),and_((USCongressTbl.nickname==splits[0]),USCongressTbl.last_name==splits[1]))))
 
 
-### Geolocation Testing ###
-
-@home.route('/geo-test')
-def geo_test():
-    return render_template('home/geo_test.html')
-
-@home.route('/postmethod', methods=['POST'])
-def postmethod():
-    data=request.get_json()
-    print(data)
-    return jsonify(data)
-
-@home.route('/geopost', methods=['POST'])
-def geopost():
-    print(request)
-    data=request.get_json()
-    print(data)
-    return jsonify(data)

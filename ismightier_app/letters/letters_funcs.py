@@ -1,5 +1,5 @@
-from ismightier_app.models import USCongressTbl,LetterPartTbl,RepresentativeSentimentTbl,SentimentLevelTbl,FederalSponsorTbl,StateSponsorTbl
-from sqlalchemy import and_,create_engine,or_
+from ismightier_app.models import LetterPartTbl
+from sqlalchemy import and_, create_engine, or_
 from numpy.random import randint
 from ismightier_app import db
 from flask import current_app

@@ -1,7 +1,6 @@
 from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
 from ismightier_app.models import LetterPartTbl
 from wtforms.validators import ValidationError
-## WeasyPrint does not work under Windows 10. Stupid Windows. ##
 from flask_weasyprint import HTML, render_pdf
 from sqlalchemy import and_,create_engine,or_
 from .letters_forms import LetterOptionsForm
