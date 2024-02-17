@@ -3,7 +3,7 @@ from .home_funcs import GetFedRepInfo,RepNormal
 from ismightier_app.models import USCongressTbl
 from wtforms.validators import ValidationError
 from sqlalchemy import and_,create_engine,or_
-from .home_forms import RepLookupForm, RepLookupGeo
+from .home_forms import RepLookupForm
 from ismightier_app import db
 import numpy as np
 from . import home
@@ -20,7 +20,6 @@ import json
 @home.route('/', methods=['GET', 'POST'])
 def homepage():
     form=RepLookupForm()
-    geoForm=RepLookupGeo()
     lookupAddress='string'
     if form.validate_on_submit():
         print(form.address.data)
@@ -28,16 +27,10 @@ def homepage():
         return redirect(
             url_for('home.results')
         )
-    if geoForm.validate_on_submit():
-        print(geoForm.address.data)
-        session['lookupAddress'] = geoForm.address.data
-        return redirect(
-            url_for('home.results')
-        )
     return render_template(
         '/home/index.jhtml',
-        form=form,
-        geoForm=geoForm)
+        form=form
+    )
 
 @home.route('/representatives')
 def results():

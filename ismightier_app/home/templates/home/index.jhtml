@@ -28,7 +28,8 @@
         <h3>Start by Finding Your Representatives</h3>
         <form method="POST" novalidate>
             {{ form.csrf_token }}
-            {{ form.address(size=60, placeholder='Address', class_='form-line-input') }}<br />
+            <span id="address-field">{{ form.address(size=60, placeholder='Address', class_='form-line-input', value='') }}</span>
+            <br />
             {% if form.address.errors %}
             {% for error in form.address.errors %}<span class="pride-baker-red-text">{{ error }}{% endfor %}</span><br />
             {% else %}
@@ -36,30 +37,45 @@
             {% endif %}
             {{ form.submit(class_='w3-margin pride-trans-pink custom-default-button') }}<br />
         </form>
-        {# <form method="POST" onsubmit="locateFunction()"> #}
-        {# <form method="POST"> #}
-            <span style="display: none;">{{ geoForm.address }}</span>
-            <button class="w3-margin pride-trans-blue custom-default-button" onclick="locateFunction()">Search Using your Current Location</button><br />
-            {# {{ geoForm.geolocate(class_='w3-margin pride-trans-blue custom-default-button') }}<br /> #}
+            <button class="w3-margin pride-trans-blue custom-default-button" onclick="locateFunction()">Use Current Location</button><br />
             <span id="geoError" class="pride-baker-red-text"></span>
-        {# </form> #}
     </div>
 </div>
 {% endblock %}
 {% block script %}
-const x = document.getElementById("geoError");
-var position = "";
+
+const x = document.getElementById("address-field"),
+    y =  document.getElementById("geoError");
+let loc = ''
 
 function locateFunction() {
-
-
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos(position))
-          }
+        navigator.geolocation.getCurrentPosition(fillLocation, showError)
+    } else {
+        y.innerHTML = "Geolocation is <em>not</em> available"
+    }
 
-    function pos(position) {
-    console.log(position)
-    x.innerHTML = position }
-}
+    function fillLocation(position) {
+        let loc = position.coords.latitude + ', ' + position.coords.longitude
+        x.innerHTML = '<input class="form-line-input" id="address" name="address" placeholder="Address" required="" size="60" type="text" value="' + loc + '">'
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                y.innerHTML = "User denied the request for Geolocation."
+                break;
+            case error.POSITION_UNAVAILABLE:
+                y.innerHTML = "Location information is unavailable."
+                break;
+            case error.TIMEOUT:
+                y.innerHTML = "The request to get user location timed out."
+                break;
+            case error.UNKNOWN_ERROR:
+                y.innerHTML = "An unknown error occurred."
+                break;
+        }
+    }
+};
 
 {% endblock %}
