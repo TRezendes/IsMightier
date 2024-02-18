@@ -2,7 +2,7 @@ from flask import Blueprint, current_app, flash, redirect, render_template, requ
 from ismightier_app.models import LetterPartTbl
 from wtforms.validators import ValidationError
 ## WeasyPrint does not work under Windows 10. Stupid Windows. ##
-#from flask_weasyprint import HTML, render_pdf   
+#from flask_weasyprint import HTML, render_pdf
 from sqlalchemy import and_,create_engine,or_
 from numpy.random import randint
 from .letters_forms import LetterOptionsForm
@@ -17,12 +17,13 @@ import json
 def rep_info(name):
     repDF=session['repDF']
     repDF=pd.DataFrame.from_dict(repDF, orient='tight')
+    repDF=repDF.replace({float("NaN"): None})
     namedRep=repDF.loc[repDF['name'] == name]
     fieldList=[]
     addressList=[]
     lookupState=session['lookupState']
     for col in namedRep.columns:
-        try: 
+        try:
             if col.split('.')[1] in ['city','state','zip','line1','line2']:
                 addressList.append(col)
         except:
