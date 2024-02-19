@@ -9,7 +9,7 @@ class USCongressTbl(db.Model):
     __table_args__ = {
         'autoload_with': db.engine
     }
-    
+
 class LetterPartTbl(db.Model):
     __tablename__ = 'letter_part'
     __table_args__ = {
@@ -30,8 +30,6 @@ def getBills():
     return bills
 
 
-
-
 class RepresentativeSentimentTbl(db.Model):
     __tablename__ = 'representative_sentiment'
     #__table_args__ = (
@@ -46,14 +44,16 @@ class RepresentativeSentimentTbl(db.Model):
         }
     #)
 
+# class SentimentLevelTbl(db.Model):
+#     __tablename__ = 'sentiment_level'
+#     __table_args__ = {
+#         'autoload_with': db.engine
+#     }
 class SentimentLevelTbl(db.Model):
-    __tablename__ = 'letter_part'
-    __table_args__ = {
-        'autoload_with': db.engine
-    }
-    
+    __table__ = db.metadata.tables['sentiment_level']
+
 def getSentiments():
-    sentiments = db.session.execute(db.select(SentimentLevelTbl.description).all())
+    sentiments = db.session.execute(db.select(SentimentLevelTbl)).scalars().all()
     return sentiments
 
 class FederalSponsorTbl(db.Model):

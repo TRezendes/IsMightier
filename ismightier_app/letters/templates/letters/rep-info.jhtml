@@ -50,9 +50,9 @@
                         {{ namedRep.iloc[0][field] }}<br />
                     {% endif %}
                 {% elif 'city' in field %}
-                    <span style="margin-left: 2rem;">{{ namedRep.iloc[0][field] }}</span>, 
+                    <span style="margin-left: 2rem;">{{ namedRep.iloc[0][field] }}</span>,
                 {% elif 'state' in field %}
-                    {{ namedRep.iloc[0][field] }} 
+                    {{ namedRep.iloc[0][field] }}
                 {% elif 'zip' in field %}
                     {{ namedRep.iloc[0][field] }}<br />
                 {% endif %}
@@ -75,7 +75,7 @@
     {% include ['letters/letter.jhtml'] %}
 
     {# WeasyPrint does not work under Windows 10. Stupid Windows. #}
-    {# <a href="{{ url_for('letters.pdf_print') }}">Get Letter as PDF</a> #}
+    <a href="{{ url_for('letters.pdf_print', name=name) }}">Get Letter as PDF</a>
 
 </div>
 

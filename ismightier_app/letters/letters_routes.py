@@ -1,8 +1,8 @@
 from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
-from ismightier_app.models import LetterPartTbl
+from ismightier_app.models import LetterPartTbl, SentimentLevelTbl
 from wtforms.validators import ValidationError
 from flask_weasyprint import HTML, render_pdf
-from sqlalchemy import and_,create_engine,or_
+from sqlalchemy import and_, create_engine, or_
 from .letters_forms import LetterOptionsForm
 from .letters_funcs import BuildLetter
 from numpy.random import randint
@@ -20,14 +20,24 @@ import json
 
 @letters.route('/<name>', methods=['GET', 'POST'])
 def rep_info(name):
+    name=name
     repDF=session['repDF']
     repDF=pd.DataFrame.from_dict(repDF, orient='tight')
     repDF=repDF.replace({float("NaN"): None})
     namedRep=repDF.loc[repDF['name'] == name]
+    # This section regards trans rights specifically, and makes the simple (and fairly naive) assumption that democrats support and republicans oppose. I intend to implement much more robust logic in this regard in the future, but for now I am working toward a minimum viable product.
+    print(namedRep)
+    if namedRep.iloc[0]['party'] == 'Democratic Party':
+        default_sentiment=1
+    elif namedRep.iloc[0]['party'] == 'Republican Party':
+        default_sentiment=-1
+    else:
+        default_sentiment=0
     fieldList=[]
     addressList=[]
     lookupState=session['lookupState']
     lookupAddress=session['lookupAddress']
+    form=LetterOptionsForm()
     for col in namedRep.columns:
         try:
             if col.split('.')[1] in ['city','state','zip','line1','line2']:
@@ -38,51 +48,75 @@ def rep_info(name):
             fieldList.append(col)
 
     ########## This section for included template. For iFrame, remove this section and use separate route. #####
-    letterDefaultText=BuildLetter(namedRep,lookupAddress)
+    if form.recipient_sentiment.data:
+        recip_sent=form.recipient_sentiment.data
+    else:
+        recip_sent=default_sentiment
+    letterDefaultText=BuildLetter(namedRep, lookupAddress, recip_sent)
+    session['letter_text']=letterDefaultText
     ##################################################
     form=LetterOptionsForm(default_value=letterDefaultText)
     return render_template(
         '/letters/rep-info.jhtml',
+        name=name,
         form=form,
         namedRep=namedRep,
         fieldList=fieldList,
         addressList=addressList,
         lookupState=lookupState,
+        default_sentiment=default_sentiment,
         ###########
         #letterDict=letterDict,
         letterDefaultText=letterDefaultText
         ###########
     )
+#
+# @letters.route('/letter')
+# def letter():
+#     letterType=randint(3)
+#     if letterType==0:
+#         selectors=['whole']
+#     elif letterType==1:
+#         selectors=['intro','middle','conclusion']
+#     elif letterType==2:
+#         selectors=['intro','middle1','middle2','conclusion']
+#     letterDict={}
+#     for selector in selectors:
+#         partDict={}
+#         records=db.session.execute(
+#             db.select(LetterPartTbl).where(
+#                 and_(
+#                     LetterPartTbl.part_placement==selector,
+#                     LetterPartTbl.recipient_sentiment==sentiment
+#                 )
+#             )
+#         ).scalars().all()
+#         numRecords=len(records)
+#         randIndex=randint(numRecords)
+#         partText=records[randIndex].part_text
+#         partColor=records[randIndex].color
+#         partDict['text']=partText
+#         partDict['color']=partColor + '50'
+#         letterDict[selector]=partDict
+#     return render_template(
+#         '/letters/letter.jhtml',
+#         letterDefaultText=letterDefaultText
+#     )
 
-
-
-@letters.route('/letter')
-def letter():
-    letterType=randint(3)
-    if letterType==0:
-        selectors=['whole']
-    elif letterType==1:
-        selectors=['intro','middle','conclusion']
-    elif letterType==2:
-        selectors=['intro','middle1','middle2','conclusion']
-    letterDict={}
-    for selector in selectors:
-        partDict={}
-        records=db.session.execute(db.select(LetterPartTbl).where(LetterPartTbl.part_placement==selector)).scalars().all()
-        numRecords=len(records)
-        randIndex=randint(numRecords)
-        partText=records[randIndex].part_text
-        partColor=records[randIndex].color
-        partDict['text']=partText
-        partDict['color']=partColor + '50'
-        letterDict[selector]=partDict
+@letters.route('/letter-pdf')
+def pdf_html():
+    text=session['letter_text']
     return render_template(
-        '/letters/letter.jhtml',
-        letterDefaultText=letterDefaultText
+        '/letters/letter-pdf.jhtml',
+        text=text
     )
 
-@letters.route('<name>/pdf')
-def pdf_print(name):
-    html = render_template('/letters/letter.jhtml')
-    print(html)
+@letters.route('/pdf')
+def pdf_print():
+    text=session['letter_text']
+    html=render_template(
+        '/letters/letter.jhtml'
+    )
+    print(text)
     return render_pdf(HTML(string=html))
+

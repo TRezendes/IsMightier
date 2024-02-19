@@ -11,10 +11,10 @@ import json
 import os
 
 
-def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str) -> str:
+def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str, sentiment=None) -> str:
     ## Randomly determine how the letter will be built
-    #letterType=randint(3)
-    letterType=0 # Let's just use whole letters for now (7/28/23)
+    letterType=randint(3)
+    # letterType=0 # Let's just use whole letters for now (7/28/23) # Going back to letter pieces, at least for testing (2/17/24)
     if letterType==0:
         selectors=['whole']
     elif letterType==1:
@@ -25,7 +25,17 @@ def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str) -> str:
     ## For each piece of the letter required, select all matching pieces from the database and select one at random
     for selector in selectors:
         partDict={}
-        records=db.session.execute(db.select(LetterPartTbl).where(LetterPartTbl.part_placement==selector)).scalars().all()
+        if sentiment:
+            records=db.session.execute(
+                db.select(LetterPartTbl).where(
+                    and_(
+                        LetterPartTbl.part_placement==selector,
+                        LetterPartTbl.recipient_sentiment==sentiment
+                    )
+                )
+            ).scalars().all()
+        else:
+            records=db.session.execute(db.select(LetterPartTbl).where(LetterPartTbl.part_placement==selector)).scalars().all()
         numRecords=len(records)
         randIndex=randint(numRecords)
         partText=records[randIndex].part_text
@@ -61,7 +71,7 @@ def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str) -> str:
     salutation=f"Dear {addressee},"
     parabreak=f'{os.linesep}{os.linesep}    '
     letterDefaultText=f"""[Your Name Here]{os.linesep}{address}{os.linesep}{os.linesep}{salutation}{parabreak}{parabreak.join({f'{letterDict[selector]}' for selector in selectors})}{os.linesep}{os.linesep}Sincerely,{os.linesep}[Your Name Here]"""
-    print(letterDict)
+    # print(letterDict)
 
 
     return letterDefaultText
