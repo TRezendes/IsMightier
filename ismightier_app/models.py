@@ -18,7 +18,7 @@ class LetterPartTbl(db.Model):
 
 # Query Factory for form QuerySelect field
 def getSubjects():
-    subjects = db.session.execute(db.select.distinct(LetterPartTbl.subject).all())
+    subjects = db.session.execute(db.select(LetterPartTbl).distinct(LetterPartTbl.subject)).scalars()
     return subjects
 
 def getLevels():
@@ -26,7 +26,7 @@ def getLevels():
     return levels
 
 def getBills():
-    bills = db.session.execute(db.select.distinct(LetterPartTbl.bill_referenced).all())
+    bills = db.session.execute(db.select(LetterPartTbl).distinct(LetterPartTbl.bill_referenced)).scalars()
     return bills
 
 
@@ -52,9 +52,17 @@ class RepresentativeSentimentTbl(db.Model):
 class SentimentLevelTbl(db.Model):
     __table__ = db.metadata.tables['sentiment_level']
 
+# def getSentiments():
+#     sentiments = db.session.execute(db.select(SentimentLevelTbl)).scalars().all()
+#     return sentiments
+
 def getSentiments():
     sentiments = db.session.execute(db.select(SentimentLevelTbl)).scalars().all()
-    return sentiments
+    sentiment_list = []
+    for row in sentiments:
+        tup = (row.level, row.description)
+        sentiment_list.append(tup)
+    return sentiment_list
 
 class FederalSponsorTbl(db.Model):
     __tablename__ = 'federal_sponsor'

@@ -1,0 +1,25 @@
+{% extends "base.jhtml" %}
+
+{% block title %}Build Your Letter{% endblock %}
+{% block content %}
+<h1>Build Your Letter</h1>
+<h2>({{ submit_worked }})</h2>
+<div class="flex-container">
+    <form method="POST">
+        {{ form.subject.label }}: {{ form.subject }}<br />
+        <p>Choose a specific piece of legislation to reference: {{ form.bill_referenced }}</p>
+        <p>What is the recipient's stance on the subject? {{ form.recipient_sentiment }}</p>
+        <p>What is your name? {{ form.senders_name(class_="form-line-input") }}</p>
+        <p>{{ form.build_button }}</p>
+    </form>
+</div>
+{% endblock %}
+
+
+{# subject = QuerySelectField
+recipient_sentiment = QuerySelectField #}
+senders_name = StringField
+{# bill_referenced = QuerySelectField #}
+letter_text = TextAreaField
+build_button = SubmitField
+

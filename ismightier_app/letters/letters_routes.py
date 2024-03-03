@@ -70,38 +70,23 @@ def rep_info(name):
         letterDefaultText=letterDefaultText
         ###########
     )
-#
-# @letters.route('/letter')
-# def letter():
-#     letterType=randint(3)
-#     if letterType==0:
-#         selectors=['whole']
-#     elif letterType==1:
-#         selectors=['intro','middle','conclusion']
-#     elif letterType==2:
-#         selectors=['intro','middle1','middle2','conclusion']
-#     letterDict={}
-#     for selector in selectors:
-#         partDict={}
-#         records=db.session.execute(
-#             db.select(LetterPartTbl).where(
-#                 and_(
-#                     LetterPartTbl.part_placement==selector,
-#                     LetterPartTbl.recipient_sentiment==sentiment
-#                 )
-#             )
-#         ).scalars().all()
-#         numRecords=len(records)
-#         randIndex=randint(numRecords)
-#         partText=records[randIndex].part_text
-#         partColor=records[randIndex].color
-#         partDict['text']=partText
-#         partDict['color']=partColor + '50'
-#         letterDict[selector]=partDict
-#     return render_template(
-#         '/letters/letter.jhtml',
-#         letterDefaultText=letterDefaultText
-#     )
+
+@letters.route('/letter')
+def letter():
+    form=LetterOptionsForm()
+    form.recipient_sentiment.data=0
+    submit_worked='Nope!'
+    if form.validate_on_submit():
+        submit_worked='Yep!'
+        return redirect(
+        url_for('letters.letter')
+    )
+    return render_template(
+        '/letters/construction-form.jhtml',
+        form=form,
+        submit_worked=submit_worked
+    )
+
 
 @letters.route('/letter-pdf')
 def pdf_html():

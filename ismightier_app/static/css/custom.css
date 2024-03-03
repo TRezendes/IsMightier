@@ -63,7 +63,6 @@ a[href^="tel:"]:before {
 
 .form-line-input {
     border-radius: 5px;
-    border: 1;
     border-color: #f5a9b8; /* pride-trans-pink */
     padding: 2px;
     height: 2em;
