@@ -15,3 +15,7 @@ class LetterOptionsForm(FlaskForm):
     letter_text = TextAreaField(label='Your Letter', default="default",validators=[InputRequired()])
     set_sentiment = SubmitField(label='Set Recipient Sentiment')
 
+class PersonalForm(FlaskForm):
+    sender_name = StringField(label='Your Name', validators=[Optional()])
+    get_letter = SubmitField(label='Get Letter')
+

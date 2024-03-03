@@ -5,14 +5,6 @@
 
 <div class="centered letter-body">
     <p>
-    <form method="POST">
-        {# {{ form.senders_name(size=42, placeholder='Enter Your Name to Add it to the Letter', class_='form-line-input', value='') }}<br /> #}
-        {# {{ form.recipient_sentiment.label }}<br /> #}
-        {{ form.recipient_sentiment(value=default_sentiment) }}<br />
-        {{ form.set_sentiment }}
-    </form>
-    </p>
-    <p>
         <textarea>{{ letterDefaultText }}</textarea>
     </p>
 </div>

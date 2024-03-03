@@ -1,0 +1,23 @@
+{% extends "base.jhtml" %}
+
+{% block title %}Your Letter{% endblock %}
+{% block content %}
+
+<div class="centered letter-body">
+    <h1>I'm just trying to see if this works</h1>
+    <form method="GET">
+    </form>
+    <form method="POST" novalidate>
+        {{ name_form.csrf_token }}
+        <span id="name-field">{{ name_form.sender_name(size=60, placeholder='Enter Your Name', class_='form-line-input', value='') }}</span>
+        <br />
+        {% if name_form.sender_name.errors %}
+            {% for error in name_form.sender_name.errors %}<span class="pride-baker-red-text">{{ error }}{% endfor %}</span><br />
+        {% else %}
+            {{ name_form.sender_name.label }}<br />
+        {% endif %}
+        {{ name_form.get_letter(class_='w3-margin pride-trans-pink custom-default-button') }}<br />
+    </form>
+</div>
+
+{% endblock %}

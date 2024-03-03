@@ -3,7 +3,7 @@ from ismightier_app.models import LetterPartTbl, SentimentLevelTbl
 from wtforms.validators import ValidationError
 from flask_weasyprint import HTML, render_pdf
 from sqlalchemy import and_, create_engine, or_
-from .letters_forms import LetterOptionsForm
+from .letters_forms import LetterOptionsForm, PersonalForm
 from .letters_funcs import BuildLetter
 from numpy.random import randint
 from ismightier_app import db
@@ -17,6 +17,7 @@ import json
 # def add_security_headers(resp):
 #     resp.headers['Content-Security-Policy']='default-src \'self\' fonts.gstatic.com *.googleapis.com kit.fontawesome.com'
 #     return resp
+
 
 @letters.route('/<name>', methods=['GET', 'POST'])
 def rep_info(name):
@@ -38,6 +39,7 @@ def rep_info(name):
     lookupState=session['lookupState']
     lookupAddress=session['lookupAddress']
     form=LetterOptionsForm()
+    name_form=PersonalForm()
     for col in namedRep.columns:
         try:
             if col.split('.')[1] in ['city','state','zip','line1','line2']:
@@ -46,12 +48,20 @@ def rep_info(name):
             pass
         if col not in ['bioguide_id','fax_number','fax_zero_url','name','title'] and col not in addressList:
             fieldList.append(col)
-
+    if name_form.validate_on_submit():
+        included_template='letter'
+    else:
+        included_template='form'
+    print(included_template)
     ########## This section for included template. For iFrame, remove this section and use separate route. #####
     if form.recipient_sentiment.data:
         recip_sent=form.recipient_sentiment.data
     else:
         recip_sent=default_sentiment
+    if name_form.sender_name.data:
+        sender_name=name_form.sender_name.data
+    else:
+        sender_name='[Your Name Here]'
     letterDefaultText=BuildLetter(namedRep, lookupAddress, recip_sent)
     session['letter_text']=letterDefaultText
     ##################################################
@@ -62,9 +72,11 @@ def rep_info(name):
         form=form,
         namedRep=namedRep,
         fieldList=fieldList,
+        name_form=name_form,
         addressList=addressList,
         lookupState=lookupState,
         default_sentiment=default_sentiment,
+        included_template=included_template,
         ###########
         #letterDict=letterDict,
         letterDefaultText=letterDefaultText

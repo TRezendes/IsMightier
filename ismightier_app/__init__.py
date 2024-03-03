@@ -20,10 +20,15 @@ def im_a_teapot_error(e):
 def server_error(e):
     return render_template('500.jhtml'), 500
 
+def debug(text):
+  print(text)
+  return ''
+
 def create_app():
     app = Flask(__name__, subdomain_matching=True)
     app.jinja_env.add_extension('jinja2.ext.loopcontrols')
-    
+    app.jinja_env.filters['debug']=debug
+
     config_path = 'config.json'
     with open(config_path) as config_file:
         config = json.load(config_file)
@@ -33,7 +38,7 @@ def create_app():
     app.config['SERVER_NAME'] = config.get('SERVER_NAME')
     app.config['OPENSTATES_API_KEY'] = config.get('OPENSTATES_API_KEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = config.get('DEV_DATABASE_URI')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config.get('SQLALCHEMY_TRACK_MODIFICATIONS')  
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config.get('SQLALCHEMY_TRACK_MODIFICATIONS')
     app.config['GOOGLE_CIVIC_INFORMATION_API_KEY'] = config.get('GOOGLE_CIVIC_INFORMATION_API_KEY')
 
     db.init_app(app)
@@ -65,7 +70,7 @@ def create_app():
     @app.template_global('RikerIpsum')
     def riker_ipsum(sentences):
         return RikerIpsum(sentences)
-    
+
     # Is this thing on?
     @app.route('/232')
     def its_alive():
@@ -80,7 +85,7 @@ def create_app():
         return redirect(
             url_for('home.homepage')
         )
-        
+
     # @app.route('/favicon-folder/<icon>')
     # def favicon():
     #     return redirect(url_for('static', filename='images/favicon-folder/<icon>'))
