@@ -92,21 +92,3 @@ def rep_info(name):
         letterDefaultText=letterDefaultText
         ###########
     )
-
-@letters.route('/letter-pdf')
-def pdf_html():
-    text=session['letter_text']
-    return render_template(
-        '/letters/letter-pdf.jhtml',
-        text=text
-    )
-
-@letters.route('/pdf')
-def pdf_print(letter_text):
-    text=form.letter_text.data
-    html=render_template(
-        '/letters/letter-pdf.jhtml',
-        text=text
-    )
-    return render_pdf(HTML(string=html))
-
