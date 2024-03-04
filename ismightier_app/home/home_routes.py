@@ -22,7 +22,6 @@ def homepage():
     form=RepLookupForm()
     lookupAddress='string'
     if form.validate_on_submit():
-        print(form.address.data)
         session['lookupAddress'] = form.address.data
         return redirect(
             url_for('home.results')

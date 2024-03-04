@@ -68,16 +68,10 @@
 </div>
 <div class="w3-col w3-padding s12 m12 l9">
     {% if included_template=='letter' %}
-        {{ included_template|debug }}
         {% include ['letters/letter.jhtml'] %}
     {% elif included_template=='form' %}
-        {{ included_template|debug }}
         {% include ['letters/letter-form.jhtml'] %}
     {% endif %}
-
-    {# WeasyPrint does not work under Windows 10. Stupid Windows. #}
-    <a href="{{ url_for('letters.pdf_print', name=name) }}">Get Letter as PDF</a>
-
 </div>
 
 {% endblock %}
