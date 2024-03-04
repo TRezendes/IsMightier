@@ -27,7 +27,6 @@ def rep_info(name):
     repDF=repDF.replace({float("NaN"): None})
     namedRep=repDF.loc[repDF['name'] == name]
     # This section regards trans rights specifically, and makes the simple (and fairly naive) assumption that democrats support and republicans oppose. I intend to implement much more robust logic in this regard in the future, but for now I am working toward a minimum viable product.
-    print(namedRep)
     if namedRep.iloc[0]['party'] == 'Democratic Party':
         default_sentiment=1
     elif namedRep.iloc[0]['party'] == 'Republican Party':
@@ -39,6 +38,18 @@ def rep_info(name):
     lookupState=session['lookupState']
     lookupAddress=session['lookupAddress']
     form=LetterOptionsForm()
+#     if form.validate_on_submit():
+#
+#
+#         text=form.letter_text.data
+#         html=render_template(
+#             '/letters/letter-pdf.jhtml',
+#             text=text
+#         )
+#         return render_pdf(HTML(string=html))
+
+
+
     name_form=PersonalForm()
     for col in namedRep.columns:
         try:
@@ -52,7 +63,6 @@ def rep_info(name):
         included_template='letter'
     else:
         included_template='form'
-    print(included_template)
     ########## This section for included template. For iFrame, remove this section and use separate route. #####
     if form.recipient_sentiment.data:
         recip_sent=form.recipient_sentiment.data
@@ -62,10 +72,10 @@ def rep_info(name):
         sender_name=name_form.sender_name.data
     else:
         sender_name='[Your Name Here]'
-    letterDefaultText=BuildLetter(namedRep, lookupAddress, recip_sent)
+    letterDefaultText=BuildLetter(namedRep, lookupAddress, sender_name, recip_sent)
     session['letter_text']=letterDefaultText
     ##################################################
-    form=LetterOptionsForm(default_value=letterDefaultText)
+    form.letter_text.data=letterDefaultText
     return render_template(
         '/letters/rep-info.jhtml',
         name=name,
@@ -82,38 +92,6 @@ def rep_info(name):
         letterDefaultText=letterDefaultText
         ###########
     )
-#
-# @letters.route('/letter')
-# def letter():
-#     letterType=randint(3)
-#     if letterType==0:
-#         selectors=['whole']
-#     elif letterType==1:
-#         selectors=['intro','middle','conclusion']
-#     elif letterType==2:
-#         selectors=['intro','middle1','middle2','conclusion']
-#     letterDict={}
-#     for selector in selectors:
-#         partDict={}
-#         records=db.session.execute(
-#             db.select(LetterPartTbl).where(
-#                 and_(
-#                     LetterPartTbl.part_placement==selector,
-#                     LetterPartTbl.recipient_sentiment==sentiment
-#                 )
-#             )
-#         ).scalars().all()
-#         numRecords=len(records)
-#         randIndex=randint(numRecords)
-#         partText=records[randIndex].part_text
-#         partColor=records[randIndex].color
-#         partDict['text']=partText
-#         partDict['color']=partColor + '50'
-#         letterDict[selector]=partDict
-#     return render_template(
-#         '/letters/letter.jhtml',
-#         letterDefaultText=letterDefaultText
-#     )
 
 @letters.route('/letter-pdf')
 def pdf_html():
@@ -124,11 +102,11 @@ def pdf_html():
     )
 
 @letters.route('/pdf')
-def pdf_print():
-    text=session['letter_text']
+def pdf_print(letter_text):
+    text=form.letter_text.data
     html=render_template(
-        '/letters/letter.jhtml'
+        '/letters/letter-pdf.jhtml',
+        text=text
     )
-    print(text)
     return render_pdf(HTML(string=html))
 

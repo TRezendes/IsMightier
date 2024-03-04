@@ -5,10 +5,9 @@
 
 <div class="centered letter-body">
     <p>
-        <textarea>{{ letterDefaultText }}</textarea>
+        {{ form.letter_text }}<br /><br />
     </p>
 </div>
-
 {% block footer %}
 <script>
     const txHeight = 16;

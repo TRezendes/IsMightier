@@ -11,10 +11,10 @@ import json
 import os
 
 
-def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str, sentiment=None) -> str:
+def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str, sender_name: str, sentiment=None) -> str:
     ## Randomly determine how the letter will be built
-    letterType=randint(3)
-    # letterType=0 # Let's just use whole letters for now (7/28/23) # Going back to letter pieces, at least for testing (2/17/24)
+    # letterType=randint(3) # Randomly selects a letter construction type
+    letterType=0 # Set's the construction type to whole letters only. Keep in place for initial deployment
     if letterType==0:
         selectors=['whole']
     elif letterType==1:
@@ -24,6 +24,7 @@ def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str, sentiment=None)
     letterDict={}
     ## For each piece of the letter required, select all matching pieces from the database and select one at random
     for selector in selectors:
+        print(sentiment)
         partDict={}
         if sentiment:
             records=db.session.execute(
@@ -70,8 +71,7 @@ def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str, sentiment=None)
         addressee=f"{letterDict['salutationName']}"
     salutation=f"Dear {addressee},"
     parabreak=f'{os.linesep}{os.linesep}    '
-    letterDefaultText=f"""[Your Name Here]{os.linesep}{address}{os.linesep}{os.linesep}{salutation}{parabreak}{parabreak.join({f'{letterDict[selector]}' for selector in selectors})}{os.linesep}{os.linesep}Sincerely,{os.linesep}[Your Name Here]"""
-    # print(letterDict)
+    letterDefaultText=f"""{sender_name}{os.linesep}{address}{os.linesep}{os.linesep}{salutation}{parabreak}{parabreak.join({f'{letterDict[selector]}' for selector in selectors})}{os.linesep}{os.linesep}Sincerely,{os.linesep}{sender_name}"""
 
 
     return letterDefaultText

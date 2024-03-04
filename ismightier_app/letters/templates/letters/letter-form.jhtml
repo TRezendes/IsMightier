@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="centered letter-body">
-    <h1>I'm just trying to see if this works</h1>
+    <h3>Personalize Your Letter</h3>
     <form method="GET">
     </form>
     <form method="POST" novalidate>
@@ -13,8 +13,6 @@
         <br />
         {% if name_form.sender_name.errors %}
             {% for error in name_form.sender_name.errors %}<span class="pride-baker-red-text">{{ error }}{% endfor %}</span><br />
-        {% else %}
-            {{ name_form.sender_name.label }}<br />
         {% endif %}
         {{ name_form.get_letter(class_='w3-margin pride-trans-pink custom-default-button') }}<br />
     </form>
