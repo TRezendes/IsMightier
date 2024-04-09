@@ -14,7 +14,7 @@ import os
 def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str, sender_name: str, sentiment=None) -> str:
     ## Randomly determine how the letter will be built
     # letterType=randint(3) # Randomly selects a letter construction type
-    letterType=0 # Set's the construction type to whole letters only. Keep in place for initial deployment
+    letterType=0 # Sets the construction type to whole letters only. Keep in place for initial deployment
     if letterType==0:
         selectors=['whole']
     elif letterType==1:
@@ -63,7 +63,7 @@ def BuildLetter(namedRep: pd.core.frame.DataFrame, address: str, sender_name: st
     ## Set salutationName equal to the representative addressee's last name
     letterDict['salutationName']=namedRep.iloc[0]['name'].split(' ')[-1]
 ##### If the function builds the letter text, then storing the lookup address in the dictionary isn't necessary ####
-    letterDict['address']=address
+    # letterDict['address']=address
     ## Build the text of the letter from the parts saved in letterDict
     if letterDict['salutationTitle']:
         addressee=f"{letterDict['salutationTitle']} {letterDict['salutationName']}"
