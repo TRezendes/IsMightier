@@ -91,15 +91,6 @@ def pop_session():
 def privacy_policy():
     return render_template('home/privacy.jhtml')
 
-    #This comment can be removed #
-
-
-# https://www.googleapis.com/civicinfo/v2/representatives?key=[API-KEY]&address=1035+wabank+st,+lancaster,+pa+17603&roles=headOfState&roles=headOfGovernment&roles=deputyHeadOfGovernment&roles=executiveCouncil&roles=legislatorLowerBody&roles=legislatorUpperBody&roles=schoolBoard
-
-
-
-
-
-#bioGuideIDs['name']=db.session.execute(db.select(USCongressTbl.bioguide_id).filter_by(or_(and_((USCongressTbl.first_name==splits[0]),USCongressTbl.last_name==splits[1]),and_((USCongressTbl.nickname==splits[0]),USCongressTbl.last_name==splits[1]))))
-
-
+@home.route('/about')
+def about():
+    return render_template('home/about.jhtml')

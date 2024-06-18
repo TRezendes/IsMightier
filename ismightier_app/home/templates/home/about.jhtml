@@ -1,0 +1,13 @@
+{% extends "base.jhtml" %}
+{% block title %}About Is Mighier{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block content %}
+
+<div class="w3-bar pride-trans-blue w3-responsive">
+    <h1 class="font-herr-von-muellerhoff pride-trans-white-text w3-jumbo"><a href="{{ url_for('home.homepage') }}">Is Mightier</a></h1>
+</div>
+<div>
+
+</div>
+{% endblock %}

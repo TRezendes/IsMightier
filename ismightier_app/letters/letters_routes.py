@@ -77,7 +77,7 @@ def rep_info(name):
     ##################################################
     form.letter_text.data=letterDefaultText
     return render_template(
-        '/letters/rep-info.jhtml',
+        '/letters/mvp-rep-info.jhtml',
         name=name,
         form=form,
         namedRep=namedRep,

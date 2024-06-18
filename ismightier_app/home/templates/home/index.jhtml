@@ -39,6 +39,7 @@
         </form>
             <button class="w3-margin pride-trans-blue custom-default-button" onclick="locateFunction()">Use Current Location</button><br />
             <span id="geoError" class="pride-baker-red-text"></span>
+            <p><a href="{{ url_for('home.about') }}">Find out more about what <em>Is Mightier</em> is, what it will be, and how you can help.</a></p>
     </div>
 </div>
 {% endblock %}
