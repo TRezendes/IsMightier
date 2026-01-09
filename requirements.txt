@@ -28,7 +28,7 @@ flask-shell-ipython==0.5.1
 Flask-SQLAlchemy==3.0.5
 Flask-WTF==1.1.1
 flask_weasyprint==1.0.0
-fonttools==4.43.0
+fonttools==4.61.0
 fqdn==1.5.1
 greenlet==2.0.2
 html5lib==1.1
